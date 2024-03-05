@@ -1,0 +1,7 @@
+{
+  "name": "EasyTicketPay",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
