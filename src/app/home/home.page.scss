@@ -1,0 +1,160 @@
+
+.main-container{
+position:fixed;
+ 
+    width: 100%;
+     height: 100vh;
+     background-color:rgb(59, 128, 255);
+    
+}
+.image{
+    height:  45px;
+    border-radius: 50px;
+    box-shadow:  -5px -5px 10px #11405d,
+             5px 5px 10px #45ffff
+}
+h1{
+    color:white;
+    font-weight: bolder;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 3%;
+
+}
+h5{
+    color:white;
+    font-weight: lighter;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: -20px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 16px;  
+    padding: 20px;
+    padding-top: 40px;
+}
+
+.img-container {
+    display:flex;
+    justify-content: right;
+    align-items:right;
+    
+}
+.points-card{
+    color:black;
+    font-family: 'Times New Roman', Times, serif; 
+    font-weight: bolder;
+    text-align: center;
+    font-size: larger;
+    z-index:999;
+}
+.child-container
+{
+    top:130px;
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background-color: antiquewhite;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+ 
+}
+
+.transport_card{
+
+    // display:flex;
+    padding: 12px;;
+    top:0px;
+    height:6rem;
+    margin-bottom:5px;
+    opacity:80%;
+
+    // border-radius: 10px;
+    // background: #71a3e5;
+    // box-shadow:  5px 5px 10px #2d415c,
+    //              -5px -5px 10px #b5ffff;
+}
+.sub_header{
+    margin-left:17px;
+    font-weight: bolder;
+    font-size: clamp(20px , 6vw, 30px);
+    color:black;
+}
+.scroll-container {
+    height:auto;
+    overflow-y: auto;
+}
+@media(height:600px){
+    .scroll-container {
+        height:210px;
+        }
+}
+@media(max-width:300px){
+    .transport_card{
+        height:5rem;
+    }
+}
+@media (min-width : 800px) {
+    .points-card{
+        font-size: 30px;
+    }
+    .image{
+        height:90px;
+    }
+     h1{
+        font-size:60px;
+     }
+     h5{
+        font-size: 20px;
+     }
+     .child-container
+     {
+        top:190px;
+     }
+
+    
+}
+@media(max-width:280px) {
+    .child-container
+    {
+        top:150px;
+    }
+    
+}
+.trainsport-icon{
+    height: 70px;
+    width: 130px;
+}
+h3{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: right;
+   
+}
+.transport_card:hover{
+ background-color: #1d52c5 !important;
+    box-shadow: -4px 4px 10px rgba(94, 93, 93);
+}
+
+
+
+//    text-align: left;
+//     background-color: red;
+//   }
+  
+// .btn-submit{
+//     width: 40%;
+//     margin-top: 30px;
+//     font-size: 1em;
+//     color:#fff;
+//     background-image: linear-gradient(to right,#3a6fcd , #89bdfd );
+//     border: none ;
+//     cursor: pointer;
+//     outline:none;
+//     transition: all 0.3s ease 0s;
+// }
+// .btn-submit:hover{
+//     background-image:linear-gradient(to left,#3a6fcd , #89bdfd ) ;
+// }
