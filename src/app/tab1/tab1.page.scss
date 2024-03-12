@@ -1,0 +1,82 @@
+*{
+    overflow: none;
+}
+.main-container{
+     height: 100vh;
+     background-color:rgb(59, 128, 255);
+     overflow:none;
+}
+img{
+    height:  45px;
+    border-radius: 50px;
+
+    box-shadow:  7px 7px 29px #c7c7c7,
+             -7px -7px 29px #ffffff;
+}
+h1{
+    color:white;
+    font-weight: bolder;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 3%;
+
+}
+h5{
+    color:white;
+    // position:absolute;
+    font-weight: lighter;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: -20px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 16px;  
+    padding: 20px;
+    padding-top: 40px;
+}
+
+.img-container {
+    display:flex;
+    justify-content: right;
+    align-items:right;
+    
+}
+.points-card{
+    color:black;
+    font-family: 'Times New Roman', Times, serif; 
+    font-weight: bolder;
+    text-align: center;
+    font-size: larger;
+}
+.child-container
+{
+    height: 25rem;
+    background-color: antiquewhite;
+   
+  
+}
+.child-container:hover{
+    box-shadow: 4px  4px 15px rgba(0,0,0,.25);
+}
+
+
+
+//    text-align: left;
+//     background-color: red;
+//   }
+  
+// .btn-submit{
+//     width: 40%;
+//     margin-top: 30px;
+//     font-size: 1em;
+//     color:#fff;
+//     background-image: linear-gradient(to right,#3a6fcd , #89bdfd );
+//     border: none ;
+//     cursor: pointer;
+//     outline:none;
+//     transition: all 0.3s ease 0s;
+// }
+// .btn-submit:hover{
+//     background-image:linear-gradient(to left,#3a6fcd , #89bdfd ) ;
+// }
