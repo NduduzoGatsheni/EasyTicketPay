@@ -69,7 +69,7 @@ h5{
     height:6rem;
     margin-bottom:5px;
     opacity:80%;
-
+    background:linear-gradient(to right, skyblue ,rgb(59, 128, 255));
     // border-radius: 10px;
     // background: #71a3e5;
     // box-shadow:  5px 5px 10px #2d415c,
@@ -134,12 +134,14 @@ h3{
    
 }
 .transport_card:hover{
- background-color: #1d52c5 !important;
+ background: #1d52c5 !important;
     box-shadow: -4px 4px 10px rgba(94, 93, 93);
 }
 
-
-
+img {
+    filter: drop-shadow(0 1px 8px white);
+  
+}
 //    text-align: left;
 //     background-color: red;
 //   }
