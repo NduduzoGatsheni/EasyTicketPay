@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'trips',
-    loadChildren: () => import('./trips/trips.module').then( m => m.TripsPageModule)
+    loadChildren: () => import('./trip/trips.module').then( m => m.TripsPageModule)
   }
 
 ];

@@ -49,4 +49,22 @@ ion-row {
 .card-icon{
     width:100px;
     height:85px;
+    color:rgb(61, 61, 61);
+}
+.card-labels{
+    font-size: clamp(18px ,2vw,22px);
+    font-weight: bold;
+}
+.data-input{
+    background-color:white;
+    font-size:25px;
+    font-weight: bold;
+    border-top-left-radius:  15px;
+    border-top-right-radius:15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.scroll-container {
+    height:auto;
+    overflow-y: auto;
 }
