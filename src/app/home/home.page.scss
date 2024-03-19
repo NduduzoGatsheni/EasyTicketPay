@@ -16,7 +16,7 @@ position:fixed;
 h1{
     color:white;
     font-weight: bolder;
-    font-size: 25px;
+    font-size: clamp(25px,4vw,50px);
     font-family: 'Times New Roman', Times, serif;
     margin-top: 3%;
 
@@ -80,7 +80,7 @@ h5{
     height:auto;
     overflow-y: auto;
 }
-@media(height:600px){
+@media(height:600px ){
     .scroll-container {
         height:210px;
         }
@@ -91,6 +91,7 @@ h5{
     }
 }
 @media (min-width : 800px) {
+   
     .points-card{
         font-size: 30px;
     }
@@ -105,9 +106,11 @@ h5{
      }
      .child-container
      {
-        top:190px;
+        top:200px;
+        height: 100vh;
+        
      }
-
+   
     
 }
 @media(max-width:280px) {
