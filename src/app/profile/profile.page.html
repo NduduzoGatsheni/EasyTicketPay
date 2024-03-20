@@ -1,13 +1,37 @@
+
+
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+  <ion-toolbar  style="--background:rgb(24, 105, 255);">
+    
+      <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">Balance: R500.00</span>
+  <ion-icon name="menu" class="icon" slot="end"></ion-icon>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div class="main-container">
+    <ion-row  class="centered-row">
+      <h1>My Account</h1>
+    </ion-row>
+      <ion-row class="centered-row">
+        <img class="image" src="/assets/azande.png" alt="profile-picture" />
+    </ion-row>
+    <ion-row  class="centered-row">
+    <h2>Azande Madlala</h2>
+    </ion-row>
+    <ion-row  class="centered-row">
+      <h2>azmadlala&#64;gmail.com</h2>
+    </ion-row>
+    <ion-row  class="centered-row">
+     <ion-card class="bar-code">
+      <img src="/assets/QR CODE.png" alt="profile-picture"/>
+      <h3 style="text-align: center; width:100%;margin-top:-2px;color:black;font-size: 18px;font-weight:bolder">QR-code</h3>
+     </ion-card>
+
+    </ion-row>
+    <ion-row class="centered-row">
+      <ion-button style="color:white;--background: green;font-size:20px;font-weight: bold;margin-top:15px;height:10px;">View Card Online</ion-button>
+    </ion-row>
+  
+</div>
+
 </ion-content>

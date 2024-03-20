@@ -2,16 +2,16 @@
     // position:fixed;
      
         width: 100%;
-         height: 100vh;
+         height: 100%;
          background-color:rgb(59, 128, 255);
         
     }
 .child-container
 {
     top:200px;
-    // position:fixed;
+
     width:100%;
-    height:100vh;
+    height:80vh;
     background-color: antiquewhite;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
@@ -33,12 +33,12 @@ ion-row {
     justify-content: center;
     align-items: center;
 }
-    .amount-input{
-        font-size: 30px;
-        font-weight: bolder;
-        color:white;
-        text-align:center;
-    }
+.amount-input{
+    font-size: 30px;
+    font-weight: bolder;
+    color:white;
+    text-align:center;
+}
  
 .phrase{
     font-size: Clamp(18px, 3vw, 25px);
@@ -52,13 +52,13 @@ ion-row {
     color:rgb(61, 61, 61);
 }
 .card-labels{
-    font-size: clamp(18px ,2vw,22px);
+    font-size: 20px;
     font-weight: bold;
 }
 .data-input{
     background-color:white;
-    font-size:25px;
-    font-weight: bold;
+    font-size:22px;
+    height:55px;
     border-top-left-radius:  15px;
     border-top-right-radius:15px;
     border-bottom-left-radius: 15px;
@@ -74,3 +74,68 @@ ion-row {
     justify-content: space-evenly;
     width:100%;
 }
+.paynow{
+    height: 60px;
+    --background: green;
+}
+.clear{
+    height: 60px;
+    --background: rgb(128, 19, 0);
+}
+@media(height:600px){
+        
+.child-container
+{
+    height:105vh;
+}
+
+}
+@media(min-height:1200px){
+        
+    .child-container
+    {
+        height:90vh;
+    }
+}
+@media(min-height:1000px){
+        
+    .child-container
+    {
+        height:90vh;
+    }
+}
+@media(min-width:700px)
+{
+    .card-labels{
+        font-size: 25px;
+        font-weight: bold;
+    }
+}  
+@media(min-width:1000px)
+{
+    .card-labels{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .paynow{
+        height: 70px;
+        font-size: 21px;
+    }
+    .clear{
+        height: 70px;
+        font-size: 21px;
+    }
+}  
+@media(max-width:300px)
+{
+    .card-labels{
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .paynow{
+        height: 45px;
+    }
+    .clear{
+        height: 45px;
+    }
+}  
