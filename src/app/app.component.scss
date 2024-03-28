@@ -1,0 +1,19 @@
+.menu-container{
+    --background:rgb(3,66,121);
+}
+.toolbar{
+    --background: rgb(44,96,192) !important;
+    color:white;
+}
+ion-item{
+    --background:rgba(255, 0, 13, 0)!important;
+    color:white!important;
+    font-size: 18px;
+}
+ion-item:hover{
+    background-color: rgb(59, 128, 255);
+    // color:green!important;
+}
+ion-item:active{
+    color:white !important;
+}

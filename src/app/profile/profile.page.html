@@ -1,13 +1,37 @@
+<ion-menu side="start" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Options</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      
+      <ion-menu-toggle auto-hide="false">
+        <ion-item >
+          <ion-icon slot="start" name="home"></ion-icon>
+          <ion-label>Update Profile</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
 
+      <ion-menu-toggle auto-hide="false">
+        <ion-item >
+          <ion-icon slot="start" name="information-circle"></ion-icon>
+          <ion-label>Card Lost</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
 
-<ion-header [translucent]="true">
-  <ion-toolbar  style="--background:rgb(24, 105, 255);">
-    
-      <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">Balance: R500.00</span>
-  <ion-icon name="menu" class="icon" slot="end"></ion-icon>
-  </ion-toolbar>
-</ion-header>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 <ion-content [fullscreen]="true">
+  <ion-toolbar  color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">Balance: R500.00</span>  
+  </ion-toolbar>
 <div class="main-container">
     <ion-row  class="centered-row">
       <h1>My Account</h1>

@@ -1,0 +1,110 @@
+.container {
+    background-image: url('/assets/dasktop.jfif')!important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%!important;
+    position:fixed;
+    width: 100%;
+    height: 100%;
+}
+.paragraph{
+    color:#fff;
+}
+ion-input {
+    width: 30px; /* Adjust the width as per your requirement */
+  }
+  
+.main-container {
+    height: 100% !important;
+    width:100%!important;
+    position:fixed;
+    top:0;
+    padding: 30px;
+    padding-top:40%;
+    background-color: rgba(16, 136, 234, 0.589);
+    z-index:1;
+}
+.title-header{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 33px;
+    font-weight:bolder;
+    color:#fff;
+}
+h4{
+    font-size: 22px;
+    color:white;
+}
+ion-row{
+    padding-top:10px;
+} 
+  .grid-item {
+    padding-top: 15px;
+  }
+.grid-item ion-label {
+    margin-bottom: 100px !important; /* Adjust the margin as needed */
+    font-size: 22px;
+    color:#fff;
+}
+ion-input{
+    font-size: 22px;
+    color:#fff;
+    border: 2px solid  #fff ;
+    border-radius: 10px;
+    // -webkit-transition: all .3s ease-in-out;
+    // transition: all .3s ease-in-out;
+}
+ion-button{
+    // float: right;
+}
+small{
+    font-size: larger;
+    color:#00ff40;
+}
+
+
+@media(max-width:500px) {
+    .container {
+        background-image: url('/assets/mobile.jpg')!important;
+    }
+    .main-container 
+    {
+        padding:15px;
+        padding-top: 40%;
+
+    }
+}
+@media(min-width:701px){
+    ion-input{
+        width:50px;
+    }
+    ion-button{
+        height:20px;
+    }
+    
+    h4{
+        font-size: 36px;
+    }
+    .paragraph{
+        font-size:larger;
+    }
+    .title-header{
+        font-size: 40px;
+    }
+    .input-container {
+        display: grid;
+      }
+      
+      .grid-container {
+        display: contents;
+        // grid-template-columns: repeat(3, 1fr); /* Two columns */
+        // grid-gap: 10px; /* Gap between grid items */
+      }
+      .clear{
+        margin-top:27px;
+      }
+}
+@media(min-width:1000px) and (max-height:801px){
+    .main-container {
+        padding-top:10%;
+    }
+}
