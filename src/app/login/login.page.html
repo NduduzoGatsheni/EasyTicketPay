@@ -9,7 +9,9 @@
 
 <ion-row>
   <ion-col><h4>Log In</h4></ion-col>
-  <ion-col><h4 style="text-align: right;">Sign Up</h4></ion-col>
+  <ion-col>
+    <h4  style="text-align: right;"><a href="/signup" style="color:white;">Sign Up</a></h4>
+</ion-col>
 </ion-row>
 
 <div class="input-container log-in">
@@ -31,15 +33,15 @@
         <ion-radio value="custom" labelPlacement="end" aria-label="Custom checkbox that is checked" color="warning"><span style="color:aliceblue;">Remember Me</span></ion-radio>
       </ion-radio-group>
 
-      <ion-button expand="block" color="success" class="log-buttons">Login</ion-button>
+      <ion-button expand="block" color="success" class="log-buttons" href="/tabs/home">Login</ion-button>
     </div>
     <div class="grid-item">
-        <ion-button expand="block" color="danger" class="log-buttons clear">Clear</ion-button>
+        <ion-button expand="block" color="danger" class="log-buttons clear" href="/forgotpassword">Clear</ion-button>
     </div>
   </div>
 
   <div class="forgot-password">
-    <a href="#/app/forgotpassword"><small>Forgot Password?</small></a>
+    <a href="/forgot-password"><small>Forgot Password?</small></a>
   </div>
 </div>
         </div>

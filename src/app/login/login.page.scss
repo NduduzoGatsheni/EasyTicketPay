@@ -13,6 +13,9 @@
 // .sign-up{
 //    overflow-y: scroll; // display:none;
 // }
+a{
+  text-decoration: none;
+}
 .main-container {
     height: 100% !important;
     width:100%!important;
@@ -33,7 +36,7 @@ h4{
     font-size: 22px;
     color:white;
 }
-h4:hover{
+h4 a:hover{
     text-decoration: underline;
     color:#00ff40;
 }
@@ -93,7 +96,6 @@ small{
         padding-top:10%;
     }
 }
-
 
 // -----------------------------------------------------------
 ion-radio {

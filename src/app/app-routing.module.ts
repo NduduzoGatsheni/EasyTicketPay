@@ -7,7 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'tabs',
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -21,7 +25,8 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
-  },  {
+  },
+  {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
@@ -36,7 +41,19 @@ const routes: Routes = [
   {
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
+  },  {
+    path: 'taxi',
+    loadChildren: () => import('./taxi/taxi.module').then( m => m.TaxiPageModule)
+  },
+  {
+    path: 'bus',
+    loadChildren: () => import('./bus/bus.module').then( m => m.BusPageModule)
+  },
+  {
+    path: 'train',
+    loadChildren: () => import('./train/train.module').then( m => m.TrainPageModule)
   }
+
 
 
 
