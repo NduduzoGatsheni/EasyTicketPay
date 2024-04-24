@@ -52,6 +52,22 @@ const routes: Routes = [
   {
     path: 'train',
     loadChildren: () => import('./train/train.module').then( m => m.TrainPageModule)
+  },
+  {
+    path: 'confirm-payment',
+    loadChildren: () => import('./confirm-payment/confirm-payment.module').then( m => m.ConfirmPaymentPageModule)
+  },
+  {
+    path: 'sending-payment',
+    loadChildren: () => import('./sending-payment/sending-payment.module').then( m => m.SendingPaymentPageModule)
+  },
+  {
+    path: 'successfully',
+    loadChildren: () => import('./successfully/successfully.module').then( m => m.SuccessfullyPageModule)
+  },
+  {
+    path: 'view-card',
+    loadChildren: () => import('./view-card/view-card.module').then( m => m.ViewCardPageModule)
   }
 
 

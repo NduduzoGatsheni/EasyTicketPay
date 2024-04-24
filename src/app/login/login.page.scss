@@ -7,12 +7,6 @@
     width: 100%;
     height: 100%;
 }
-// .input-container{
-//     display:none;
-//   }
-// .sign-up{
-//    overflow-y: scroll; // display:none;
-// }
 a{
   text-decoration: none;
 }
@@ -56,16 +50,12 @@ ion-input{
     color:#fff;
     border: 2px solid  #fff ;
     border-radius: 10px;
-    // -webkit-transition: all .3s ease-in-out;
-    // transition: all .3s ease-in-out;
 }
 
 small{
     font-size: larger;
     color:#00ff40;
 }
-
-
 @media(max-width:500px) {
     .container {
         background-image: url('/assets/mobile.jpg')!important;
@@ -84,8 +74,8 @@ small{
       
       .grid-container {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Two columns */
-        grid-gap: 10px; /* Gap between grid items */
+        grid-template-columns: repeat(2, 1fr); 
+        grid-gap: 10px; 
       }
       .clear{
         margin-top:27px;
@@ -101,7 +91,6 @@ small{
 ion-radio {
     --border-radius: 4px;
     --inner-border-radius: 4px;
-    
     --color: #ddd;
     --color-checked: #15ec15;
   }
@@ -109,7 +98,6 @@ ion-radio {
   ion-radio.ios::part(container) {
     width: 20px;
     height: 20px;
-  
     border: 2px solid #ddd;
     border-radius: 4px;
   }

@@ -15,33 +15,33 @@
   <div class="grid-container">
     <div class="grid-item">
       <ion-label>Full Name</ion-label> 
-      <ion-input type="text" style="margin-top: 5px;"></ion-input>
+      <ion-input type="text" [(ngModel)]="passenger.passangerNames" style="margin-top: 5px;"></ion-input>
     </div>
    
     <div class="grid-item">
       <ion-label>Email Address</ion-label> 
-      <ion-input type="text" style="margin-top: 5px;"></ion-input>
+      <ion-input type="text" [(ngModel)]="passenger.passangerEmail" style="margin-top: 5px;"></ion-input>
     </div>
 
     <div class="grid-item">
       <ion-label>Password</ion-label>
-      <ion-input type="password" style="margin-top: 5px;"></ion-input>
+      <ion-input type="password" [(ngModel)]="passenger.passangerPassword" style="margin-top: 5px;"></ion-input>
     </div>
 
     <div class="grid-item">
       <ion-label>Confirm Password</ion-label>
-      <ion-input type="password" style="margin-top: 5px;"></ion-input>
+      <ion-input type="password" [(ngModel)]="confirmPassword" style="margin-top: 5px;"></ion-input>
     </div>
 
     <div class="grid-item">
-      <ion-button expand="block" color="success" class="log-buttons" href="/login">Sign-up</ion-button>
+      <ion-button expand="block" color="success" class="log-buttons" (click)="signup()">Sign-up</ion-button>
     </div>
     <div class="grid-item">
-        <ion-button expand="block" color="danger" class="log-buttons" href="/forgot-password">Clear</ion-button>
+      <ion-button expand="block" color="danger" class="log-buttons" (click)="clearFields()">Clear</ion-button>
     </div>
   </div>
 </div>
-        </div>
+    </div>
   </div>
 </ion-content>
 
