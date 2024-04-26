@@ -19,12 +19,12 @@
 
     <div class="grid-item">
       <ion-label>Email Address</ion-label> 
-      <ion-input type="text" style="margin-top: 5px;"></ion-input>
+      <ion-input type="text" style="margin-top: 5px;" [(ngModel)]="email"></ion-input>
     </div>
 
     <div class="grid-item">
       <ion-label>Password</ion-label>
-      <ion-input type="password" style="margin-top: 5px;"></ion-input>
+      <ion-input type="password" style="margin-top: 5px;" [(ngModel)]="password"></ion-input>
     </div>
 
     <div class="grid-item">
@@ -33,7 +33,7 @@
         <ion-radio value="custom" labelPlacement="end" aria-label="Custom checkbox that is checked" color="warning"><span style="color:aliceblue;">Remember Me</span></ion-radio>
       </ion-radio-group>
 
-      <ion-button expand="block" color="success" class="log-buttons" href="/tabs/home">Login</ion-button>
+      <ion-button expand="block" color="success" class="log-buttons" (click)="login()">Login</ion-button>
     </div>
     <div class="grid-item">
         <ion-button expand="block" color="danger" class="log-buttons clear" href="/forgotpassword">Clear</ion-button>

@@ -41,7 +41,8 @@ const routes: Routes = [
   {
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
-  },  {
+  },
+  {
     path: 'taxi',
     loadChildren: () => import('./taxi/taxi.module').then( m => m.TaxiPageModule)
   },
@@ -68,11 +69,39 @@ const routes: Routes = [
   {
     path: 'view-card',
     loadChildren: () => import('./view-card/view-card.module').then( m => m.ViewCardPageModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./Taxi_Driver_Pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'scan-qr',
+    loadChildren: () => import('./Taxi_Driver_Pages/scan-qr/scan-qr.module').then( m => m.ScanQRPageModule)
+  },
+  {
+    path: 'vechile-profile',
+    loadChildren: () => import('./Taxi_Driver_Pages/vechile-profile/vechile-profile.module').then( m => m.VechileProfilePageModule)
+  },
+  {
+    path: 'analytics',
+    loadChildren: () => import('./Taxi_Driver_Pages/analytics/analytics.module').then( m => m.AnalyticsPageModule)
+  },
+  {
+    path: 'today-tracker',
+    loadChildren: () => import('./Taxi_Driver_Pages/today-tracker/today-tracker.module').then( m => m.TodayTrackerPageModule)
+  },
+  {
+    path: 'fee-tracker',
+    loadChildren: () => import('./Taxi_Driver_Pages/fee-tracker/fee-tracker.module').then( m => m.FeeTrackerPageModule)
+  },
+  {
+    path: 'cliam-history',
+    loadChildren: () => import('./Taxi_Driver_Pages/cliam-history/cliam-history.module').then( m => m.CliamHistoryPageModule)
+  },
+  {
+    path: 'driver-tabs',
+    loadChildren: () => import('./Taxi_Driver_Pages/driver-tabs/driver-tabs.module').then( m => m.DriverTabsPageModule)
   }
-
-
-
-
 ];
 @NgModule({
   imports: [

@@ -15,7 +15,7 @@ export class SignupPage implements OnInit {
   };
   confirmPassword: string = '';
 
-  constructor(public navCtrl: NavController, private authService: AuthService) {}
+  constructor( private authService: AuthService) {}
   ngOnInit() {}
 
   // Signup function

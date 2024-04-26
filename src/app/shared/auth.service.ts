@@ -1,16 +1,19 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseError } from 'firebase/app';
 import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore,private alertController: AlertController) { }
+  constructor(private afAuth: AngularFireAuth,
+              private firestore: AngularFirestore,
+              private alertController: AlertController,
+              public loadingController: LoadingController) { }
 
   async signUp(full_name: string, email: string, password: string ): Promise<void> {
     try {
@@ -35,8 +38,15 @@ export class AuthService {
      
     }
   }
-
-
+  async presentLoader() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      translucent: true,
+      spinner: 'circles', 
+      duration: 1000 
+    });
+    await loading.present();
+  }
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
@@ -44,15 +54,12 @@ export class AuthService {
       message: message,
       buttons: ['OK']
     });
-
     await alert.present();
   }
-
 
  async login(email: string, password: string): Promise<void> {
     try {
       await this.afAuth['signInWithEmailAndPassword'](email, password);
-      // If login successful, you can navigate the user to another page or perform other actions
     } catch (error) {
       console.error('Error logging in:', error);
 
@@ -65,6 +72,5 @@ export class AuthService {
       }
     }
   }
-
 
 }
