@@ -4,40 +4,29 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseError } from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
+import { passenger } from '../service/passenger';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  [x: string]: any;
+  current_User:string="";
+  email: string="";
+  uid!:any;
 
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore,
               private alertController: AlertController,
-              public loadingController: LoadingController) { }
+              public loadingController: LoadingController,
+              private router: Router) { }
 
-  async signUp(full_name: string, email: string, password: string ): Promise<void> {
-    try {
-      const credential = await this.afAuth['createUserWithEmailAndPassword'](email, password);
-      const user = credential.user;
-      if (user) {
-        await this.firestore.collection('passengers').doc(user.uid).set({
-          full_name: full_name,
-          uid:user.uid,
-          email: email,
-          password: password
-        });
-      } else {
-        throw new Error('User is null');
-      }
-    } catch (error) {
-      if (error instanceof FirebaseError && error.code === 'auth/email-already-in-use') {
-        this.presentAlert('Error', 'The email address is already in use by another account. Please use a different email.');
-    } else {
-        this.presentAlert('Error', 'Error signing up:');
-      }
-     
-    }
-  }
+getCurrentUser() {
+                return this.afAuth.authState; // Returns an Observable<firebase.User | null>
+              }
+
   async presentLoader() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
@@ -57,12 +46,23 @@ export class AuthService {
     await alert.present();
   }
 
- async login(email: string, password: string): Promise<void> {
+
+  async login(email: string, password: string): Promise<void> {
     try {
-      await this.afAuth['signInWithEmailAndPassword'](email, password);
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      if (userCredential && userCredential.user) {
+        const uid = userCredential.user.uid;
+        this.email = email;
+        this.uid = uid;
+        alert(uid);
+        this.router.navigate(['/tabs/home'], { queryParams: { uid: uid } });
+        // this.router.navigate(['/tabs/home',uid]);
+      } else {
+        this.presentAlert('Error', 'The User not found.');
+      }
+      
     } catch (error) {
       console.error('Error logging in:', error);
-
       if (error instanceof FirebaseError && error.code === 'auth/user-not-found') {
         this.presentAlert('Error', 'The email address is not associated with any account.');
       } else if (error instanceof FirebaseError && error.code === 'auth/wrong-password') {
@@ -73,4 +73,37 @@ export class AuthService {
     }
   }
 
+  // getUserData(): Observable<UserData | null> {
+  //   return this.firestore.collection('passagers').doc(this.uid).snapshotChanges()
+  //     .pipe(
+  //       map(doc => {
+  //         if (doc.payload.exists) {
+  //           const data = doc.payload.data() as UserData; // Cast payload data to UserData interface
+  //           return { id: doc.payload.id, ...data };
+  //         } else {
+  //           alert("Document does not exist");
+  //           return null;
+  //         }
+  //       })
+  //     );
+  // }
+  // async getUserData() {
+   
+  //   try {
+  //     const userDoc = await this.firestore.collection('passagers').doc(this.uid).ref.get();
+    
+  //     if (userDoc.exists) {
+  //       const userData = userDoc.data(); // Retrieve user data
+     
+  //       return userData; // Return an object with individual variables
+  //     } else {
+  //       alert(" Return null if the document does not exist");
+  //       return null; // Return null if the document does not exist
+       
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching user data:', error);
+  //     return null; // Return null or handle errors appropriately
+  //   }
+  // }
 }

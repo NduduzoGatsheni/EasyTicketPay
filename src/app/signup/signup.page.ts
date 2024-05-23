@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../shared/auth.service';
+import { ServiceService } from '../shared/service.service';
+import { passenger } from '../service/passenger';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -8,33 +12,31 @@ import { AuthService } from '../shared/auth.service';
 })
 export class SignupPage implements OnInit {
 
-  passenger = {
-    passangerNames: '',
-    passangerEmail: '',
-    passangerPassword: ''
-  };
+  passenger:passenger={
+    passengerId: '',
+    passengerNames: '',
+    passengerEmail: '',
+    passengerPassword: ''
+  }
   confirmPassword: string = '';
 
-  constructor( private authService: AuthService) {}
+  constructor( private authService: AuthService,private afAuth: AngularFireAuth,private serv:ServiceService) {}
+
   ngOnInit() {}
 
-  // Signup function
 
-  signup() {
-    // Perform validation checks
-    if (this.passenger.passangerNames && this.passenger.passangerEmail && this.passenger.passangerPassword && this.confirmPassword) {
-      if (this.passenger.passangerPassword !== this.confirmPassword) {
-        // Passwords do not match
+  async signup() {
+    if (this.passenger.passengerNames && this.passenger.passengerEmail && this.passenger.passengerPassword && this.confirmPassword) {
+      if (this.passenger.passengerPassword !== this.confirmPassword) {
         console.log('Passwords do not match');
         return;
       }
-
-      this.authService.signUp(this.passenger.passangerNames, this.passenger.passangerEmail, this.passenger.passangerPassword);
-      // All fields are filled and passwords match, you can perform signup process here
-      console.log('Signup process initiated');
-      
-      // Optionally, you can clear the fields after successful signup
-      this.clearFields();
+       const credential = await this.afAuth.createUserWithEmailAndPassword(this.passenger.passengerEmail, this.passenger.passengerPassword);
+       const user = credential.user;
+      if (user) {
+        this.serv.signUp(this.passenger,user.uid);
+        console.log('Signup process initiated');
+        this.clearFields();  }
     } else {
       // Some fields are missing
       console.log('Please fill in all fields');
@@ -42,9 +44,9 @@ export class SignupPage implements OnInit {
   }
 
   clearFields() {
-    this.passenger.passangerNames = '';
-    this.passenger.passangerEmail = '';
-    this.passenger.passangerPassword = '';
+    this.passenger.passengerNames = '';
+    this.passenger.passengerEmail = '';
+    this.passenger.passengerPassword = '';
     this.confirmPassword = '';
   }
 }

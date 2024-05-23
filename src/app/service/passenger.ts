@@ -1,6 +1,6 @@
  export interface passenger{
-    passangerId:string;
-    passangerNames:string;
-    passangerEmail:string;
-    passangerPassword:string;
+    passengerId:string;
+    passengerNames:string;
+    passengerEmail:string;
+    passengerPassword:string;
  }

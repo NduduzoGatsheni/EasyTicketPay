@@ -1,0 +1,80 @@
+*{
+    padding:0;
+    margin: 0;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: antiquewhite;
+}
+.header{
+    width:100%;
+    height: 34%;
+    background-color: #0087FF;
+}
+.title{
+    padding: 10px;
+    padding-top: 20px;
+    width:100%;
+    height:70px;
+}
+.title ion-icon{
+    font-size: 40px;
+    color: white;
+    
+}
+.menu{
+    text-align: end;
+}
+.trainsport-icon{
+    height:130px;
+    
+}
+.vehicle-img{
+    display: flex;
+    justify-content:flex-start;
+    align-items:flex-end;
+}
+.top-container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+h1{
+    font-size: 30px;
+    font-weight: bolder;
+    color:white;
+    text-align: end;
+}
+.vehicle-name{
+    display: flex;
+    justify-content: flex-end;
+    align-items:flex-end;
+    padding:20px;
+}
+.main-container
+{
+    width:100%;
+    height:70% ;
+    position:fixed;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    overflow-x: auto;
+
+}
+.date-tag{
+    padding-top:10px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+tr,td
+{
+    width: 100% !important;
+    padding-top:4px;
+    padding-bottom:4px;
+}
+ion-icon:hover {
+    cursor: pointer!important;
+    color: #a407ff!important;
+    }
