@@ -73,11 +73,8 @@ const routes: Routes = [
   {
     path: 'view-card',
     loadChildren: () => import('./view-card/view-card.module').then( m => m.ViewCardPageModule)
-  },
-  {
-    path: 'scan-qr',
-    loadChildren: () => import('./Taxi_Driver_Pages/scan-qr/scan-qr.module').then( m => m.ScanQRPageModule)
-  },
+  }
+
   // {
   //   path: 'vehicle-profile',
   //   loadChildren: () => import('./Taxi_Driver_Pages/vehicle-profile/vehicle-profile.module').then( m => m.VehicleProfilePageModule)

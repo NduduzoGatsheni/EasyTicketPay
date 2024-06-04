@@ -12,7 +12,7 @@
   </div>
 <!-- <div style="width:100%;height:100vh;display:flex;justify-content: center;align-items:center;padding:100px;"> -->
 <div class="content">
-<ion-card>
+<ion-card [routerLink]="['/today-tracker']">
 <div>
 <img src="/assets/carDollar.png" alt=""/>
 </div>
@@ -21,7 +21,7 @@ Trip Fee Tracks
 </div>
 </ion-card>
 
-<ion-card>
+<ion-card [routerLink]="['/fee-tracker']">
   <div>
     <img src="/assets/dollar.svg" alt=""/>
     </div>
@@ -31,9 +31,7 @@ Trip Fee Tracks
 </ion-card>
 
 
-<ion-card>
-  
-
+<ion-card [routerLink]="['/cliam-history']">
   <div>
     <img src="/assets/history.svg" alt=""/>
     </div>
@@ -41,8 +39,7 @@ Trip Fee Tracks
     History
     </div>
 </ion-card>
-<ion-card>
-  
+<ion-card [routerLink]="['/analytics']">
   <div>
     <img src="/assets/ana.png" alt=""/>
   </div>
@@ -51,15 +48,6 @@ Trip Fee Tracks
     </div>
 </ion-card>
 </div>
-
-
-
 </div>
-
-
-
-
-
-<!-- </div> -->
 </ion-content>
 

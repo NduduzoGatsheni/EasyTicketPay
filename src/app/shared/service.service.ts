@@ -10,8 +10,36 @@ import { Observable } from 'rxjs';
 })
 export class ServiceService {
 
+  private uid!:string;
+  // private pass!:any;
+  private passenger: passenger;
 
-  constructor(private afAuth: AngularFireAuth,private firestore: AngularFirestore,private authService: AuthService) { }
+  constructor(private afAuth: AngularFireAuth,private firestore: AngularFirestore,private authService: AuthService) 
+  { 
+    this.passenger = {
+      passengerId: '',
+      passengerNames: '',
+      passengerEmail: '',
+      passengerPassword: ''
+    };
+  }
+
+  setUID(uid: string) {
+    this.uid=uid;
+  }
+  getUID(): string {
+    return this.uid;
+  }
+  setData(passenger: passenger) {
+    this.passenger = passenger;
+  }
+  getData(): passenger {
+    return this.passenger;
+  }
+
+
+
+
 
   getUserByUid(uid: string): Observable<passenger[]> {
     return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid)).valueChanges();

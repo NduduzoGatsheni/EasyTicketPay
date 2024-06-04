@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../shared/service.service';
 import { AuthService } from '../shared/auth.service';
+import { passenger } from '../service/passenger';
 import firebase from 'firebase/compat/app';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-uid:string="";
+  uid:string="9qdkqV52b1cqkRgDwnTmBYkCtOC2";
   name = "";
   user!:any;
   balance = 100;
@@ -23,6 +24,12 @@ uid:string="";
   currentUser: any | null;
   passenger:string ="";
 
+  pass: passenger = {
+    passengerId: '',
+    passengerNames: '',
+    passengerEmail: '',
+    passengerPassword: ''
+  };
   queryParamsSubscription: Subscription | undefined;
   constructor(private authService: AuthService,private serv:ServiceService,private route: ActivatedRoute) {
    }
@@ -30,16 +37,25 @@ uid:string="";
    ngOnInit(): void {
 
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-    this.uid= params['uid'];
-
+    
+    const  data= params['uid'];
+    if(data){
+      this.uid = data;
+    }
     });
+
     this.serv.getUserByUid(this.uid).subscribe(users => {
       if (users.length > 0) {
         const user = users[0].passengerNames;
         const [name, surname] = user.split(' ');
+
+        this.pass = users[0];
+        this.serv.setData(this.pass);
+
         this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
       } else {
         console.log('User not found');
+        alert('User not found!!');
       }
     });
   }

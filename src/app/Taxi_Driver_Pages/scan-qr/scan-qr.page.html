@@ -1,13 +1,20 @@
-<ion-header [translucent]="true">
+<!-- <ion-header>
   <ion-toolbar>
-    <ion-title>Scan_QR</ion-title>
+    <ion-title>Scanner</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Scan_QR</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-content>
+  <div class="scanner-container">
+    <div class="scanner-frame">
+      <video #scannerPreview></video>
+      <div class="scan-line"></div>
+    </div>
+    <ion-button expand="full" (click)="startScan()">Start Scan</ion-button>
+    <ion-button expand="full" (click)="stopScan()">Stop Scan</ion-button>
+    <ion-text *ngIf="scanResult">
+      <h2>Scan Result:</h2>
+      <p>{{ scanResult }}</p>
+    </ion-text>
+  </div>
+</ion-content> -->

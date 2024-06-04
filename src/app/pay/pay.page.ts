@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceService } from '../shared/service.service';
+import { passenger } from '../service/passenger';
 
 @Component({
   selector: 'app-pay',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PayPage implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  amount!:number;
+  name:string='';
+  uid!:string;
+  passenger: passenger;
+  constructor(private serv:ServiceService) {
+    this.passenger = {
+      passengerId: '',
+      passengerNames: '',
+      passengerEmail: '',
+      passengerPassword: ''
+    };
   }
+
+  ngOnInit() {  
+      this.passenger = this.serv.getData();
+      this.name = this.passenger.passengerNames;
+  }
+
+
 
 }

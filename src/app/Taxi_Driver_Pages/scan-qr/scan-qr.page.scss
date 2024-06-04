@@ -1,0 +1,39 @@
+.scanner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 16px;
+  }
+  
+  .scanner-frame {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    border: 2px solid #000;
+    margin-bottom: 16px;
+  }
+  
+  video {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .scan-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    animation: scan-line-animation 2s infinite;
+  }
+  
+  @keyframes scan-line-animation {
+    0% { top: 0; }
+    50% { top: 50%; }
+    100% { top: 100%; }
+  }
+  

@@ -8,8 +8,12 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 25px; 
+    margin-bottom: 200px;
   }
   .content ion-card {
+    // position: absolute;
+    width:auto;
+    height: auto;
     background-color: #0087FF;
     display: grid;
     grid-template-rows: 4fr 1fr;
@@ -81,3 +85,12 @@ ion-icon:hover {
     cursor: pointer!important;
     color: #a407ff!important;
     }
+
+@media(max-width:400px){
+
+    .content ion-card {
+        width:auto;
+        height: 150px;
+
+    }
+}

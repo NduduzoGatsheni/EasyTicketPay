@@ -1,40 +1,16 @@
-<!-- 
 <ion-tabs>
-
-  <ion-tab-bar slot="bottom" >
-    <ion-tab-button tab="home" href="/tabs/home" class="tabs">
-      <ion-icon  name="home"></ion-icon>
-      <ion-icon aria-hidden="true" name="grid"></ion-icon>
-      <ion-label>Home</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="pay" href="/tabs/pay">
-      <div class="scanner">
-      <img src="/assets/scan.png" alt=""/>
+  <div class="vehicle-tabs" id="d-tabs">
+    <div class="scanner" [routerLink]="['/fee-tracker']"></div>
+    <button [routerLink]="['/dashboard']">
+      <ion-icon name="grid"></ion-icon>
+    </button>
+    <div>
+      <div class="scanner" [routerLink]="['/scan-qr']">
+        <img src="/assets/scan.png" alt=""/>
+      </div>
     </div>
-    </ion-tab-button>
-
-    <ion-tab-button tab="settings" href="/tabs/settings">
-      <ion-icon aria-hidden="true" name="settings"></ion-icon>
-      <ion-icon aria-hidden="true" name="person"></ion-icon>
-      <ion-label>Settings</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-
-</ion-tabs>
- -->
- <ion-tabs>
- <div class="vehicle-tabs" id="d-tabs">
-  <button [routerLink]="['/Taxi_Driver_Pages/dashboard']">
-    <ion-icon name="grid"></ion-icon>
-  </button>
-  <div>
-    <a class="scanner" href="/dashboard">
-      <img src="/assets/scan.png" alt=""/>
-    </a>
+    <button [routerLink]="['/vehicle-profile']">
+      <ion-icon name="person"></ion-icon>
+    </button>
   </div>
-  <button [routerLink]="['/dashboard']">
-    <ion-icon name="person"></ion-icon>
-  </button>
-</div>
 </ion-tabs>
