@@ -5,8 +5,16 @@ import { FirebaseError } from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ServiceService } from './service.service';
 import { Observable, map } from 'rxjs';
 import { passenger } from '../service/passenger';
+import { Vehicle } from '../service/vehicle';
+import { take, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+// import { Injectable } from '@angular/core';
+// import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +24,7 @@ export class AuthService {
   current_User:string="";
   email: string="";
   uid!:any;
+  vehicle: Vehicle | undefined;
 
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore,
@@ -23,11 +32,21 @@ export class AuthService {
               public loadingController: LoadingController,
               private router: Router) { }
 
-getCurrentUser() {
-                return this.afAuth.authState; // Returns an Observable<firebase.User | null>
-              }
+getCurrentUserUID(): Promise<string | null> {
+return new Promise<string | null>((resolve, reject) => {
+  this.afAuth.authState.subscribe((user) => {
+    if (user) {
+      resolve(user.uid);
+    } else {
+      resolve(null); // No user is signed in
+    }
+  }, error => {
+    reject(error);
+  });
+});
+}
 
-  async presentLoader() {
+async presentLoader() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
       translucent: true,
@@ -37,7 +56,7 @@ getCurrentUser() {
     await loading.present();
   }
 
-  async presentAlert(header: string, message: string) {
+async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
       message: message,
@@ -45,23 +64,58 @@ getCurrentUser() {
     });
     await alert.present();
   }
-
+  getTransport(uid: string): Observable<Vehicle[]> {
+    return this.firestore.collection<Vehicle>('vehicles', ref => ref.where('transportNumber', '==', uid)).valueChanges();
+  }
 
   async login(email: string, password: string): Promise<void> {
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     try {
+      if (emailRegex.test(email)) {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
       if (userCredential && userCredential.user) {
         const uid = userCredential.user.uid;
         this.email = email;
         this.uid = uid;
         alert(uid);
-        this.router.navigate(['/tabs/home'], { queryParams: { uid: uid } });
-        // this.router.navigate(['/tabs/home',uid]);
-      } else {
+        this.router.navigate(['/tabs/home'], { queryParams: { uid: uid} });
+      }
+     else {
         this.presentAlert('Error', 'The User not found.');
       }
-      
-    } catch (error) {
+    }
+    if (!emailRegex.test(email)) {
+      //  ----------------------------------------------------------------------
+      this.getTransport(email).pipe(
+        take(1), // Take only the first emitted value
+        switchMap((vehicles: Vehicle[]) => {
+          if (vehicles.length > 0) {
+            this.vehicle = vehicles[0];
+            return this.afAuth.signInWithEmailAndPassword(this.vehicle.email, password);
+          } else {
+            return of(null); // Emit a null value if no vehicles are found
+          }
+        })
+      ).subscribe({
+        next: async (userCredential) => {
+          if (userCredential && userCredential.user) {
+            const uid = userCredential.user.uid;
+            this.uid = uid;
+            this.email = email;
+            await this.presentAlert(this.uid, 'Login in successfully.');
+            this.router.navigate(['/driver-tabs/dashboard'], { queryParams: { uid: uid } });
+          } else {
+            await this.presentAlert('Error', 'The User not found.');
+          }
+        },
+        error: async (error) => {
+          console.error('Error signing in:', error.message);
+          await this.presentAlert('Error', 'An error occurred while signing in.');
+        }
+      });
+    }
+    }
+    catch (error) {
       console.error('Error logging in:', error);
       if (error instanceof FirebaseError && error.code === 'auth/user-not-found') {
         this.presentAlert('Error', 'The email address is not associated with any account.');
@@ -73,37 +127,4 @@ getCurrentUser() {
     }
   }
 
-  // getUserData(): Observable<UserData | null> {
-  //   return this.firestore.collection('passagers').doc(this.uid).snapshotChanges()
-  //     .pipe(
-  //       map(doc => {
-  //         if (doc.payload.exists) {
-  //           const data = doc.payload.data() as UserData; // Cast payload data to UserData interface
-  //           return { id: doc.payload.id, ...data };
-  //         } else {
-  //           alert("Document does not exist");
-  //           return null;
-  //         }
-  //       })
-  //     );
-  // }
-  // async getUserData() {
-   
-  //   try {
-  //     const userDoc = await this.firestore.collection('passagers').doc(this.uid).ref.get();
-    
-  //     if (userDoc.exists) {
-  //       const userData = userDoc.data(); // Retrieve user data
-     
-  //       return userData; // Return an object with individual variables
-  //     } else {
-  //       alert(" Return null if the document does not exist");
-  //       return null; // Return null if the document does not exist
-       
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching user data:', error);
-  //     return null; // Return null or handle errors appropriately
-  //   }
-  // }
 }

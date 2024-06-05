@@ -17,10 +17,7 @@ export class HomePage implements OnInit {
   user!:any;
   balance = 100;
   totalTrips = 5;
-  cards = [
-    { name: 'Tax', balance: 50 },
-    { name: 'Bus', balance: 75 }
-  ];
+  
   currentUser: any | null;
   passenger:string ="";
 
@@ -48,11 +45,10 @@ export class HomePage implements OnInit {
       if (users.length > 0) {
         const user = users[0].passengerNames;
         const [name, surname] = user.split(' ');
-
         this.pass = users[0];
         this.serv.setData(this.pass);
-
         this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
+
       } else {
         console.log('User not found');
         alert('User not found!!');
@@ -61,9 +57,5 @@ export class HomePage implements OnInit {
   }
 
   search(){
-
-
-
-
   }
 }

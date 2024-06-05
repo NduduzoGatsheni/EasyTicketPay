@@ -4,15 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'driver-tabs',
     loadChildren: () => import('./Taxi_Driver_Pages/driver-tabs/driver-tabs.module').then( m => m.DriverTabsPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
@@ -73,7 +73,12 @@ const routes: Routes = [
   {
     path: 'view-card',
     loadChildren: () => import('./view-card/view-card.module').then( m => m.ViewCardPageModule)
+  },
+  {
+    path: 'sign-vehicle',
+    loadChildren: () => import('./Taxi_Driver_Pages/sign-vehicle/sign-vehicle.module').then( m => m.SignVehiclePageModule)
   }
+
 
   // {
   //   path: 'vehicle-profile',

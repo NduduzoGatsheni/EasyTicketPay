@@ -1,15 +1,15 @@
 <ion-tabs>
   <div class="vehicle-tabs" id="d-tabs">
-    <div class="scanner" [routerLink]="['/fee-tracker']"></div>
-    <button [routerLink]="['/dashboard']">
+    <!-- <div class="scanner" [routerLink]="['/driver-tabs/fee-tracker']"></div> -->
+    <button [routerLink]="['/driver-tabs/dashboard']">
       <ion-icon name="grid"></ion-icon>
     </button>
     <div>
-      <div class="scanner" [routerLink]="['/scan-qr']">
+      <div class="scanner" [routerLink]="['/driver-tabs/scan-qr']">
         <img src="/assets/scan.png" alt=""/>
       </div>
     </div>
-    <button [routerLink]="['/vehicle-profile']">
+    <button [routerLink]="['/driver-tabs/vehicle-profile']">
       <ion-icon name="person"></ion-icon>
     </button>
   </div>

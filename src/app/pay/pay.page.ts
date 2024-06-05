@@ -19,6 +19,7 @@ export class PayPage implements OnInit {
       passengerNames: '',
       passengerEmail: '',
       passengerPassword: ''
+      
     };
   }
 

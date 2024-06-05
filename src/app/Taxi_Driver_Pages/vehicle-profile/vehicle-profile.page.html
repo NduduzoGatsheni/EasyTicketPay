@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Vehicle_Profile</ion-title>
+    <ion-title>
+      Vehicle Profile
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Vehicle_Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      
+        <img [src]="vehicleProfilePicture" class="profile-picture">
+      
+    </ion-row>
+    <ion-row>
+        <div style="width:100%;">
+    <div class="profile">
+            <ion-label>Owner Name</ion-label>
+            <ion-label>{{vehicle.ownerName}}</ion-label>
+          </div> <div class="profile">
+            <ion-label>Email</ion-label>
+            <ion-label>{{vehicle.email}}</ion-label>
+          </div> <div class="profile">
+            <ion-label>Transport Type</ion-label>
+            <ion-label>{{vehicle.transportType}}</ion-label>
+          </div> <div class="profile">
+            <ion-label>Transport Number</ion-label>
+            <ion-label>{{vehicle.transportNumber}}</ion-label>
+          </div>
+        </div>
+      <!-- </ion-col> -->
+    </ion-row>
+  </ion-grid>
 </ion-content>
