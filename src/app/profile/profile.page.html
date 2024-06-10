@@ -1,36 +1,9 @@
-<ion-menu side="start" contentId="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Options</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <ion-list>
-      
-      <ion-menu-toggle auto-hide="false">
-        <ion-item >
-          <ion-icon slot="start" name="home"></ion-icon>
-          <ion-label>Update Profile</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item >
-          <ion-icon slot="start" name="information-circle"></ion-icon>
-          <ion-label>Card Lost</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-    </ion-list>
-  </ion-content>
-</ion-menu>
 <ion-content [fullscreen]="true">
   <ion-toolbar  color="primary">
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">Balance: R500.00</span>  
+    <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">Balance: R {{passenger.balance}}</span>  
   </ion-toolbar>
 <div class="main-container">
     <ion-row  class="centered-row">
@@ -40,17 +13,17 @@
         <img class="image" src="/assets/azande.png" alt="profile-picture" />
     </ion-row>
     <ion-row  class="centered-row">
-    <h2>Azande Madlala</h2>
+    <h2>{{name}}</h2>
     </ion-row>
     <ion-row  class="centered-row">
-      <h2>azmadlala&#64;gmail.com</h2>
+      <h2>{{passenger.passengerEmail}}</h2>
     </ion-row>
     <ion-row  class="centered-row">
      <ion-card class="bar-code">
-      <img src="/assets/QR CODE.png" alt="profile-picture"/>
-      <h3 style="text-align: center; width:100%;margin-top:-2px;color:black;font-size: 18px;font-weight:bolder">QR-code</h3>
+      
+      <qrcode [qrdata]="qrCodeValue" [width]="160" [errorCorrectionLevel]="'M'"></qrcode>
+      <ion-button fill="clear" style="text-align: center; width:100%;margin-top:-18px;color:black;font-size: 18px;font-weight:bolder" (click)="generateQrCode()">QR Code</ion-button>
      </ion-card>
-
     </ion-row>
     <ion-row class="centered-row">
       <ion-button style="color:white;--background: green;font-size:20px;font-weight: bold;margin-top:15px;height:10px;">View Card Online</ion-button>
@@ -59,3 +32,4 @@
 </div>
 
 </ion-content>
+

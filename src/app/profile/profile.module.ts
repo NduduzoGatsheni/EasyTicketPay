@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
-
+import { QRCodeModule } from 'angularx-qrcode';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    QRCodeModule
   ],
   declarations: [ProfilePage]
 })

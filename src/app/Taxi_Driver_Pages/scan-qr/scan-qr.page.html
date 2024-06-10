@@ -1,21 +1,38 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Scanner</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
-  <h1>{{name}}</h1>
-  <!-- <div class="scanner-container">
+  <div class="scanner-container">
     <div class="scanner-frame">
       <video #scannerPreview></video>
       <div class="scan-line"></div>
     </div>
-    <ion-button expand="full" (click)="startScan()">Start Scan</ion-button>
-    <ion-button expand="full" (click)="stopScan()">Stop Scan</ion-button>
-    <ion-text *ngIf="scanResult">
+    <div class="button-container">
+    <ion-button expand="block" (click)="startScan()">Start Scan</ion-button>
+    <ion-button expand="block" (click)="stopScan()">Stop Scan</ion-button>
+    
+  </div>
+  <ion-text *ngIf="scanResult">
       <h2>Scan Result:</h2>
       <p>{{ scanResult }}</p>
-    </ion-text>
-  </div> -->
+  </ion-text>
+ 
+
+    <div class="paying-passenger">
+      <div class="fixed-container">
+        <div class="topic">
+          <h1>Passenger Paying</h1>
+          <ion-icon name="checkbox-outline"></ion-icon>
+          <!-- <ion-button [routerLink]="['/home']">Home</ion-button> -->
+        </div>
+        <div class="scroll">
+          <div class="item-container">
+            <ion-item *ngFor="let passenger of passengers">
+              <ion-label>{{ passenger.name }}</ion-label>
+              <ion-button (click)="removePassenger(passenger)">Remove</ion-button>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</div>
 </ion-content>

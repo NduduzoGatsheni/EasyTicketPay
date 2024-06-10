@@ -63,6 +63,12 @@ export class ServiceService {
   getUserByUid(uid: string): Observable<passenger[]> {
     return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid)).valueChanges();
   }
+  updatePassenger(passengerId: string, updatedPassenger: any): Promise<void> {
+    return this.firestore.collection('passengers').doc(passengerId).update(updatedPassenger);
+  }
+  getPassengerById(passengerId: string): Observable<passenger | undefined> {
+    return this.firestore.collection('passengers').doc<passenger>(passengerId).valueChanges();
+  }
 
   getTransport(uid: string): Observable<Vehicle[]> {
     return this.firestore.collection<Vehicle>('vehicles', ref => ref.where('vehicleId', '==', uid)).valueChanges();

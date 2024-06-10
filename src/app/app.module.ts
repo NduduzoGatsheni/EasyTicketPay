@@ -11,11 +11,11 @@ import { environment } from '../environments/environment';
 import 'firebase/firestore';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, QRCodeModule,  
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,

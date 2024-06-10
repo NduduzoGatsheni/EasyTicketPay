@@ -19,13 +19,18 @@ export class LoginPage implements OnInit {
   email:string="";
   password:string="";
   signupType:string="";
-
+  selectedDashboard: string ='';
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
   }
-
-  
+  navigateToDashboard() {
+    if (this.selectedDashboard === 'passenger') {
+      this.router.navigate(['/signup']);
+    } else if (this.selectedDashboard === 'vehicle') {
+      this.router.navigate(['/driver-tabs/signup']);
+    }
+  }
   async login(){
     if(this.email && this.password){
       await this.authService.presentLoader();

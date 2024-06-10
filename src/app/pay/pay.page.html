@@ -2,7 +2,7 @@
 
 <ion-content fullscreen>
 <div class="main-container">
-  <span>Balance: {{name}}</span>
+  <span>Balance: R{{passenger.balance}}</span>
   <ion-row>
     <ion-col size="4">
 
@@ -27,14 +27,8 @@
     </ion-col>
   </ion-row>
   <ion-row class="amount">
-   
-
       <h5 class="phrase">Recharge Your Transport Card</h5>
- 
-   
   </ion-row>
-
-
 <div class="child-container p-5">
   <div class="scroll-container">
 <ion-row class="amount">
@@ -61,7 +55,7 @@
   </ion-col>
   </ion-row>
   <div  class="button-container mt-3 mb-1">
-  <ion-button  expand="block" class="paynow" style="margin-right:10px;">Pay Now</ion-button>
+  <ion-button  expand="block" class="paynow" style="margin-right:10px;" (click)="update()">Pay Now</ion-button>
   <ion-button  expand="block" class="clear" style="margin-left:10px;">Clear</ion-button></div>
 </div>
 </div>
