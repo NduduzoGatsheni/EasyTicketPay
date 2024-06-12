@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardPage implements OnInit {
 
-  uid:string="9qdkqV52b1cqkRgDwnTmBYkCtOC2";
+  uid:string="1ZXjgirev8beBEZh2GZSsLVDRgQ2";
   name = "";
   user!:any;
   vehicle:Vehicle;
@@ -41,17 +41,22 @@ export class DashboardPage implements OnInit {
       this.serv.getTransport(this.uid).subscribe(users => {
         if (users.length > 0) {
           const user = users[0].ownerName;
-          // alert
           const [name, surname] = user.split(' ');
+      
           this.vehicle = users[0];
-          this.serv. setVehicleData(this.vehicle);
-          this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
-          
-          alert("Name: " +this.name);
-        } else {
+          this.serv.setVehicleData(this.vehicle);
+      
+          if (surname) {
+              this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
+          } else {
+              this.name = `${name.toUpperCase()}.`;
+          }
+      
+          alert("Name: " + this.name);
+      } else {
           console.log('User not found');
           alert('User not found!!');
-        }
+      }      
       });
   }
 

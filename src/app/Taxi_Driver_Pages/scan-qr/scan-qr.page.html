@@ -1,6 +1,14 @@
 
 <ion-content>
   <div class="scanner-container">
+    <div class="location">
+    <ion-label>From - To</ion-label>
+    <ion-select [(ngModel)]="place" (ionChange)="onLocationChange($event)" class="custom-select">
+      <ion-select-option *ngFor="let location of locations" [value]="location.location">{{location.location}}</ion-select-option>
+    </ion-select>
+    
+</div>
+    <p>{{ currentTime }}</p>
     <div class="scanner-frame">
       <video #scannerPreview></video>
       <div class="scan-line"></div>
@@ -8,25 +16,22 @@
     <div class="button-container">
     <ion-button expand="block" (click)="startScan()">Start Scan</ion-button>
     <ion-button expand="block" (click)="stopScan()">Stop Scan</ion-button>
-    
   </div>
   <ion-text *ngIf="scanResult">
       <h2>Scan Result:</h2>
       <p>{{ scanResult }}</p>
   </ion-text>
- 
-
     <div class="paying-passenger">
       <div class="fixed-container">
         <div class="topic">
           <h1>Passenger Paying</h1>
           <ion-icon name="checkbox-outline"></ion-icon>
-          <!-- <ion-button [routerLink]="['/home']">Home</ion-button> -->
         </div>
         <div class="scroll">
           <div class="item-container">
             <ion-item *ngFor="let passenger of passengers">
               <ion-label>{{ passenger.name }}</ion-label>
+              <ion-label>{{ passenger.money_in }}</ion-label>
               <ion-button (click)="removePassenger(passenger)">Remove</ion-button>
             </ion-item>
           </div>

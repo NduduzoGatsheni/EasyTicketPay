@@ -27,25 +27,27 @@ export class PayPage implements OnInit {
   }
 
 
-update() {
-  const passengerId = this.passenger.passengerId;
+  update() {
+    const passengerId = this.passenger.passengerId;
+  
+    this.serv.getPassengerById(passengerId).pipe(take(1)).subscribe(existingPassenger => {
+      if (existingPassenger) {
+        const currentBalance = existingPassenger.balance || 0;  // Assuming balance is now a number
+        const newAmount = parseFloat(this.amount) || 0; 
+        const newBalance = currentBalance + newAmount;
+  
+        const updatedPassenger: passenger = { ...existingPassenger, balance: newBalance };
+  
+        this.serv.updatePassenger(passengerId, updatedPassenger).then(() => {
+          console.log('Passenger updated successfully');
+        }).catch(error => {
+          console.error('Error updating passenger', error);
+        });
+      }
+    });
+  }
+  
 
-  this.serv.getPassengerById(passengerId).pipe(take(1)).subscribe(existingPassenger => {
-    if (existingPassenger) {
-      const currentBalance = existingPassenger.balance ? parseFloat(existingPassenger.balance) : 0;
-      const newAmount = parseFloat(this.amount) || 0;  // Handle invalid numbers
-      const newBalance = currentBalance + newAmount;
-
-      const updatedPassenger = { ...existingPassenger, balance: newBalance.toString() };
-
-      this.serv.updatePassenger(passengerId, updatedPassenger).then(() => {
-        console.log('Passenger updated successfully');
-      }).catch(error => {
-        console.error('Error updating passenger', error);
-      });
-    }
-  });
-}
 
 
 }

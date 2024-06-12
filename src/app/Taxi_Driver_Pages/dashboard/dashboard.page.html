@@ -4,7 +4,20 @@
     <ion-row class="title">
       <ion-col><a href="/login"><ion-icon name="chevron-back-outline" ></ion-icon></a></ion-col>
       <ion-col><h1 style="text-align: center;">{{name}}</h1></ion-col>
-      <ion-col  class="menu"> <ion-icon name="menu-outline"></ion-icon></ion-col>
+      <ion-col  class="menu">
+      
+        <h4 style="text-align: right;"><a id="popover-button" style="color:white;"> <ion-icon name="menu-outline"></ion-icon></a></h4>
+        <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item [button]="true" [detail]="false" [routerLink]="['/signup']">Passenger</ion-item>
+                <ion-item [button]="true" [detail]="false" [routerLink]="['/login']" style="color:red">Log Out</ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-col>
     </ion-row>
   <div class="vehicle-img">
     <img class="trainsport-icon" src="/assets/both.png" alt="profile-picture" />

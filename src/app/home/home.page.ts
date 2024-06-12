@@ -47,7 +47,12 @@ export class HomePage implements OnInit {
         const [name, surname] = user.split(' ');
         this.pass = users[0];
         this.serv.setData(this.pass);
-        this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
+        // this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
+        if (surname) {
+          this.name = `${name.charAt(0).toUpperCase()}.${surname}`;
+      } else {
+          this.name = `${name.toUpperCase()}.`;
+      }
 
       } else {
         console.log('User not found');

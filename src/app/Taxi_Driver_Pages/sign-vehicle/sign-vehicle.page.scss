@@ -9,6 +9,13 @@
     left: 0; 
     z-index: -1; 
 }
+.custom-select {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --min-width: 200px;
+    --max-width: 100%;
+  }
+  
 .container{
     width: 100%;
     height: 100%;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { passenger } from '../service/passenger';
+import { Transaction } from '../service/Transactions';
 import { Vehicle } from '../service/vehicle';
 import { AuthService } from '../shared/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -73,11 +74,9 @@ export class ServiceService {
   getTransport(uid: string): Observable<Vehicle[]> {
     return this.firestore.collection<Vehicle>('vehicles', ref => ref.where('vehicleId', '==', uid)).valueChanges();
   }
-
   async signUp(passenger:passenger, uid:string ): Promise<void> {
     try {
         passenger.passengerId = uid;
-        
         await this.firestore.collection('passengers').doc(passenger.passengerId).set({
           passengerNames: passenger.passengerNames,
           passengerEmail: passenger.passengerEmail,
@@ -118,5 +117,22 @@ export class ServiceService {
         this.authService.presentAlert('Error', 'Error signing up: ' + error.message);
       }
     }
+  }
+  async addTransaction(transaction: Transaction): Promise<void> {
+    const transactionRef = this.firestore.collection('transactions').doc().ref;
+    transaction.TransactionID = transactionRef.id;
+
+    await transactionRef.set({
+      TransactionID: transaction.TransactionID,
+      VehicleId: transaction.VehicleId,
+      passengerId: transaction.passengerId,
+      From_To: transaction.From_To,
+      Amount: transaction.Amount,
+      dateTime: transaction.dateTime
+    });
+  }
+
+  getTransactions(): Observable<any> {
+    return this.firestore.collection('transactions').valueChanges();
   }
 }

@@ -3,7 +3,6 @@ export interface Transaction{
     VehicleId:string;
     passengerId:string;
     From_To:string;
-    Amount:string;
-    VehicleType:string;
+    Amount:number;
     dateTime:string;
 }

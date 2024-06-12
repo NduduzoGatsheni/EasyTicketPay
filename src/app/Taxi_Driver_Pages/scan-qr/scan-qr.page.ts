@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Vehicle } from 'src/app/service/vehicle';
+import { passenger } from 'src/app/service/passenger';
+import { Transaction } from 'src/app/service/Transactions';
 import { ServiceService } from 'src/app/shared/service.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-scan-qr',
   templateUrl: './scan-qr.page.html',
@@ -14,21 +17,55 @@ export class ScanQRPage implements OnInit {
   user!:any;
   vehicle:Vehicle;
 
+  money:number=20;
+  passenger: passenger;
     
   @ViewChild('scannerPreview', { static: false })
   scannerPreview!: ElementRef;
   scanResult: string = '';
+passengers =[
+  {name:"Nduduzo",money_in: 20},
+  {name:"Amahle",money_in: 20},
+  {name:"Wandile",money_in: 20},
+  {name:"Fezeka",money_in: 20},
+  {name:"Ayanda",money_in: 20},
+  {name:"Nokubonga",money_in: 20}
+];
+place:string="";
+price:number=0;
 
-  passengers = [
-    { name: 'John Doe' },
-    { name: 'Jane Smith' },
-    { name: 'John Doe' },
-    { name: 'Jane Smith' },
-    { name: 'John Doe' },
-    { name: 'Jane Smith' }
-  ];
+locations =[{location:"Durban - South Beach",amount:10},
+  {location:"Durban - Umlazi",amount:20},
+  {location:"Durban - Kwashu",amount:25},
+  {location:"Durban - Mont_Clair",amount:18},
+  {location:"Durban - Mayville",amount:18},
+  {location:"Durban - Musgrave",amount:10},
+  {location:"Durban - Pagate",amount:30},
+  {location:"Durban - Velurem",amount:34},
+  {location:"Durban - Lovu",amount:28},
+  {location:"Durban - Umkhomazi",amount:40},
+  {location:"Durban - clair_mont",amount:40},
+  {location:"Durban - clair_estate",amount:25},
+  {location:"Durban - New German",amount:18},
+  {location:"Durban - Pine Town",amount:24},
+  {location:"Durban - Stanger",amount:60},
+  {location:"Durban - Ballito",amount:40},
+  {location:"Durban - Nanda",amount:34},
+  {location:"Durban - Mdloti",amount:28},
+  {location:"Durban - Efolweni",amount:55}
+]
 
-  constructor(private serv:ServiceService) {
+transaction: Transaction = {
+  TransactionID: '',
+  VehicleId: '',
+  passengerId: '',
+  From_To: '', //where to get this??
+  Amount: 0,
+  dateTime: ''
+};
+currentTime!: string;
+
+  constructor(private serv:ServiceService,private firestore: AngularFirestore) {
     this.vehicle = {
       vehicleId:'',
       ownerName: '',
@@ -37,36 +74,142 @@ export class ScanQRPage implements OnInit {
       transportNumber: '',
       password: ''
     }
+    this.passenger={
+      passengerId:'',
+      passengerNames:'',
+      passengerEmail:'',
+      passengerPassword:'',
+   }
+
    }
 
   ngOnInit() {
     this.vehicle = this.serv.getVehicleData();
+
     this.name = this.vehicle.transportType;
+
+    this.updateTime();
+    setInterval(() => {
+      this.updateTime();
+    }, 1000);
+  }
+  updateTime() {
+    const now = new Date();
+    this.currentTime = now.toLocaleTimeString();
+  }
+
+  onLocationChange(event: any) {
+    const selectedLoc = this.locations.find(loc => loc.location === this.place);
+    if (selectedLoc) {
+      this.price = selectedLoc.amount;
+
+
+      alert('Selected Amount:'+ this.price);
+    }
+  }
+
+  addTransaction() {
+    this.serv.addTransaction(this.transaction)
+      .then(() => {
+        console.log('Transaction added successfully');
+        // Optionally, reset the transaction object
+        this.transaction = {
+          TransactionID: '',
+          VehicleId: '',
+          passengerId: '',
+          From_To: '',
+          Amount: 0,
+          dateTime: ''
+        };
+      })
+      .catch(error => console.error('Error adding transaction: ', error));
   }
   removePassenger(passenger:any) {
     this.passengers = this.passengers.filter(p => p !== passenger);
   }
-
   async startScan() {
-    // Ensure the scanner has permission
+
     const permission = await BarcodeScanner.checkPermission({ force: true });
     if (!permission.granted) {
-      // Handle permission denied case
+      this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
       this.scanResult = 'Camera permission is not granted';
       return;
     }
-
     BarcodeScanner.hideBackground(); // Make the background of WebView transparent
     const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
-
     if (result.hasContent) {
       this.scanResult = result.content; // Process the scan result
+      this.subtractBalance(this.scanResult);
     } else {
       this.scanResult = 'No content found';
     }
-
     BarcodeScanner.showBackground(); // Make the background of WebView visible again
   }
+
+  async subtractBalance(uid: string): Promise<string> {
+    const passengerRef = this.firestore.collection('passengers').doc<passenger>(uid);
+    const doc = await passengerRef.get().toPromise();
+
+    if (!doc?.exists) {
+      alert("Passenger not found");
+      return 'Passenger not found';
+    }
+
+    const passenger = doc.data();
+    this.passenger = passenger as passenger
+
+    alert(this.passenger?.passengerNames);
+
+    if (!passenger || typeof passenger.balance !== 'number') {
+      alert('Invalid passenger data');
+      return 'Invalid passenger data';
+    }
+
+    if (passenger.balance < this.price) {
+      alert('Insufficient balance');
+      return 'Insufficient balance';
+    }
+
+    const newBalance = passenger.balance - this.price;
+    await passengerRef.update({ balance: newBalance });
+
+
+// left to load the array and database for transactions
+const saDate = this.convertToSouthAfricaTime(new Date().toISOString());
+
+if(this.place && this.price){
+this.transaction = {
+  TransactionID: '',
+  VehicleId: this.vehicle.vehicleId,
+  passengerId: passenger.passengerId,
+  From_To: this.place,
+  Amount: this.price,
+  dateTime: saDate
+};
+
+this. addTransaction();
+alert(`New balance for passenger ${uid} is ${newBalance}`);
+}
+else{
+  alert("amount and location is missing");
+}
+    return `New balance for passenger ${uid} is ${newBalance}`;
+  }
+ convertToSouthAfricaTime(utcDate: string): string {
+    const date = new Date(utcDate);
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Africa/Johannesburg',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+  
+    return new Intl.DateTimeFormat('en-GB', options).format(date);
+  }
+  
 
   stopScan() {
     BarcodeScanner.stopScan();

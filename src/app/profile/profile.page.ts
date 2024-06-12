@@ -20,10 +20,10 @@ export class ProfilePage implements OnInit {
   passenger: passenger;
   constructor(private serv:ServiceService) {
     this.passenger = {
-      passengerId: '',
-      passengerNames: '',
-      passengerEmail: '',
-      passengerPassword: ''  
+      passengerId: '9qdkqV52b1cqkRgDwnTmBYkCtOC2',
+      passengerNames: 'Fezeka',
+      passengerEmail: 'fezi@gmail.com',
+      passengerPassword: '09988776'  
     };
    }
   ngOnInit() {
@@ -32,7 +32,8 @@ export class ProfilePage implements OnInit {
   }
 
   generateQrCode() {
-    this.qrCodeValue = this.userData;
+  
+    this.qrCodeValue = this.passenger.passengerId;
   }
 
 }

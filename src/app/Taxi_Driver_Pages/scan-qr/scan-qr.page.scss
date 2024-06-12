@@ -1,7 +1,19 @@
 ion-content{
   background-color: rgb(253, 250, 217);
 }
-
+.location{
+  width:100%;
+  // background-color: #0099ff;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.location ion-label{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right:20px;
+  // background-color: red;
+}
 .scanner-container {
     display: flex;
     position: fixed;
@@ -11,7 +23,7 @@ ion-content{
     height: 100%;
     width:100%;
     padding-bottom: 0;
-    padding-top:40px;
+    // padding-top:40px;
     background-color: antiquewhite;
   }
   

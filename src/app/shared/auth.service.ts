@@ -11,9 +11,6 @@ import { passenger } from '../service/passenger';
 import { Vehicle } from '../service/vehicle';
 import { take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-
-// import { Injectable } from '@angular/core';
-// import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase/auth';
 
 @Injectable({

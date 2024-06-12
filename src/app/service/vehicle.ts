@@ -5,4 +5,7 @@ export interface Vehicle {
     transportType: string;
     transportNumber: string;
     password: string;
+
+    amount?:number;
+    from_to?:string;
   }

@@ -9,12 +9,24 @@
 <ion-input type="name" [(ngModel)]="vehicle.ownerName"></ion-input>
 <ion-label  position="floating">Email</ion-label>
 <ion-input type="email" [(ngModel)]="vehicle.email"></ion-input>
-<ion-label position="floating">Transport Type</ion-label>
-<ion-select interface="popover" [(ngModel)]="vehicle.transportType">
-<ion-select-option value="bus">Bus</ion-select-option>
-<ion-select-option value="taxi">Taxi</ion-select-option>
-<ion-select-option value="train">Train</ion-select-option>
-</ion-select>
+<ion-row><ion-col>
+  <ion-label position="floating">Transport Type</ion-label>
+  <ion-select interface="popover" [(ngModel)]="vehicle.transportType">
+  <ion-select-option value="bus">Bus</ion-select-option>
+  <ion-select-option value="taxi">Taxi</ion-select-option>
+  <ion-select-option value="train">Train</ion-select-option>
+  </ion-select>
+</ion-col>
+<!-- <ion-col>
+  <ion-label position="floating">From - To</ion-label>
+  <ion-select interface="popover" [(ngModel)]="vehicle.transportType" class="custom-select">
+    <ion-select-option value="bus">Durban - Umlazi</ion-select-option>
+    <ion-select-option value="taxi">Stanger - Durban</ion-select-option>
+    <ion-select-option value="train">Mont_Clair - Durban</ion-select-option>
+  </ion-select>
+</ion-col> -->
+</ion-row>
+
 <ion-label position="floating">Transport Number</ion-label>
 <ion-input type="name" placeholder="use as username to login" [(ngModel)]="vehicle.transportNumber"></ion-input>
 <ion-label position="floating">Password</ion-label>

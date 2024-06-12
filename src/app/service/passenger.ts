@@ -1,5 +1,5 @@
  export interface passenger{
-    balance?: any;
+    balance?: number;
     passengerId:string;
     passengerNames:string;
     passengerEmail:string;
