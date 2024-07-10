@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <form [formGroup]="signupForm" (ngSubmit)="onSubmit()"> -->
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input name="name" type="text" [(ngModel)]="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input name="email" type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input name="password" type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input name="confirmPassword" type="password" [(ngModel)]="confirmPassword"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" (click)="addUser()">Sign Up</ion-button>
+  <!-- </form> -->
+
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Registered Users</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+      </ion-label>
+      <ion-button fill="clear" (click)="editUser(user)">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" color="success" (click)="updateUser()">
+    Update
+  </ion-button>
+</ion-content>

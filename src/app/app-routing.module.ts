@@ -77,7 +77,11 @@ const routes: Routes = [
   {
     path: 'sign-vehicle',
     loadChildren: () => import('./Taxi_Driver_Pages/sign-vehicle/sign-vehicle.module').then( m => m.SignVehiclePageModule)
+  },  {
+    path: 'edit',
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   }
+
 ];
 @NgModule({
   imports: [

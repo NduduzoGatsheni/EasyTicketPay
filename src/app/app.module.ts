@@ -12,7 +12,8 @@ import 'firebase/firestore';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { QRCodeModule } from 'angularx-qrcode';
-
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+// import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, QRCodeModule,  
