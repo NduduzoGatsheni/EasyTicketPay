@@ -23,14 +23,20 @@ export class ScanQRPage implements OnInit {
   @ViewChild('scannerPreview', { static: false })
   scannerPreview!: ElementRef;
   scanResult: string = '';
-passengers =[
-  {name:"Nduduzo",money_in: 20},
-  {name:"Amahle",money_in: 20},
-  {name:"Wandile",money_in: 20},
-  {name:"Fezeka",money_in: 20},
-  {name:"Ayanda",money_in: 20},
-  {name:"Nokubonga",money_in: 20}
-];
+// payingPassenger={name:"Nduduzo",money_in: 20};
+
+passengers: Array<{name: string, money_in: number }>;
+payingPassenger: {name: string, money_in: number };
+
+
+// passengers =[
+//   {name:"Nduduzo",money_in: 20},
+//   {name:"Amahle",money_in: 20},
+//   {name:"Wandile",money_in: 20},
+//   {name:"Fezeka",money_in: 20},
+//   {name:"Ayanda",money_in: 20},
+//   {name:"Nokubonga",money_in: 20}
+// ];
 place:string="";
 price:number=0;
 
@@ -80,7 +86,10 @@ currentTime!: string;
       passengerEmail:'',
       passengerPassword:'',
    }
-
+   this.passengers =[
+    {name:"",money_in: 0}
+  ];
+  this.payingPassenger={name:"",money_in: 0};
    }
 
   ngOnInit() {
@@ -131,7 +140,7 @@ currentTime!: string;
 
     const permission = await BarcodeScanner.checkPermission({ force: true });
     if (!permission.granted) {
-      this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
+      // this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
       this.scanResult = 'Camera permission is not granted';
       return;
     }
@@ -158,7 +167,7 @@ currentTime!: string;
     const passenger = doc.data();
     this.passenger = passenger as passenger
 
-    alert(this.passenger?.passengerNames);
+    alert(this.passenger?.passengerNames);//shows the name of a passenger
 
     if (!passenger || typeof passenger.balance !== 'number') {
       alert('Invalid passenger data');
@@ -173,7 +182,11 @@ currentTime!: string;
     const newBalance = passenger.balance - this.price;
     await passengerRef.update({ balance: newBalance });
 
-
+//load a temporal array
+alert(this.price);
+this.payingPassenger.name = this.passenger?.passengerNames;
+this.payingPassenger.money_in = this.price;
+this.passengers.push({ ...this.payingPassenger });
 // left to load the array and database for transactions
 const saDate = this.convertToSouthAfricaTime(new Date().toISOString());
 

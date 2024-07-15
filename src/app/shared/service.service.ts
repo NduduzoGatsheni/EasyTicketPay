@@ -132,7 +132,14 @@ export class ServiceService {
     });
   }
 
-  getTransactions(): Observable<any> {
-    return this.firestore.collection('transactions').valueChanges();
+  // getTransactions(): Observable<any> {
+  //   return this.firestore.collection("transactions").valueChanges();
+  // }
+  getTransactions(): Observable<any[]> {
+    return this.firestore.collection('transactions').snapshotChanges();
+  }
+
+  getTransactionsById(passengerId: string): Observable<any[]> {
+    return this.firestore.collection('transactions', ref => ref.where('passengerId', '==', passengerId)).snapshotChanges();
   }
 }
