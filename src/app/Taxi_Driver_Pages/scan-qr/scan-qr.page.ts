@@ -3,6 +3,7 @@ import { Vehicle } from 'src/app/service/vehicle';
 import { passenger } from 'src/app/service/passenger';
 import { Transaction } from 'src/app/service/Transactions';
 import { ServiceService } from 'src/app/shared/service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
@@ -23,20 +24,13 @@ export class ScanQRPage implements OnInit {
   @ViewChild('scannerPreview', { static: false })
   scannerPreview!: ElementRef;
   scanResult: string = '';
-// payingPassenger={name:"Nduduzo",money_in: 20};
 
-passengers: Array<{name: string, money_in: number }>;
+
+// passengers!: Array<{name: string, money_in: number }>;
+passengers: Array<{ name: string; money_in: number }> = []; // Initialized as an empty array
+
 payingPassenger: {name: string, money_in: number };
 
-
-// passengers =[
-//   {name:"Nduduzo",money_in: 20},
-//   {name:"Amahle",money_in: 20},
-//   {name:"Wandile",money_in: 20},
-//   {name:"Fezeka",money_in: 20},
-//   {name:"Ayanda",money_in: 20},
-//   {name:"Nokubonga",money_in: 20}
-// ];
 place:string="";
 price:number=0;
 
@@ -65,13 +59,15 @@ transaction: Transaction = {
   TransactionID: '',
   VehicleId: '',
   passengerId: '',
-  From_To: '', //where to get this??
+  From_To: '', 
   Amount: 0,
   dateTime: ''
 };
 currentTime!: string;
 
-  constructor(private serv:ServiceService,private firestore: AngularFirestore) {
+  constructor(private serv:ServiceService,
+    private firestore: AngularFirestore,
+  private auth: AuthService) {
     this.vehicle = {
       vehicleId:'',
       ownerName: '',
@@ -86,9 +82,9 @@ currentTime!: string;
       passengerEmail:'',
       passengerPassword:'',
    }
-   this.passengers =[
-    {name:"",money_in: 0}
-  ];
+  //  this.passengers =[
+  //   {name:"",money_in: 0}
+  // ];
   this.payingPassenger={name:"",money_in: 0};
    }
 
@@ -113,7 +109,7 @@ currentTime!: string;
       this.price = selectedLoc.amount;
 
 
-      alert('Selected Amount:'+ this.price);
+      // alert('Selected Amount:'+ this.price);
     }
   }
 
@@ -121,6 +117,8 @@ currentTime!: string;
     this.serv.addTransaction(this.transaction)
       .then(() => {
         console.log('Transaction added successfully');
+        this.auth.presentAlert("Transaction Added", "The transaction was added successfully.");
+
         // Optionally, reset the transaction object
         this.transaction = {
           TransactionID: '',
@@ -131,7 +129,7 @@ currentTime!: string;
           dateTime: ''
         };
       })
-      .catch(error => console.error('Error adding transaction: ', error));
+      .catch(error => console.error('Error adding transaction: ', error)  );
   }
   removePassenger(passenger:any) {
     this.passengers = this.passengers.filter(p => p !== passenger);
@@ -140,7 +138,7 @@ currentTime!: string;
 
     const permission = await BarcodeScanner.checkPermission({ force: true });
     if (!permission.granted) {
-      // this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
+      this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
       this.scanResult = 'Camera permission is not granted';
       return;
     }
@@ -151,6 +149,7 @@ currentTime!: string;
       this.subtractBalance(this.scanResult);
     } else {
       this.scanResult = 'No content found';
+      this.auth.presentAlert("Error", "No content found");
     }
     BarcodeScanner.showBackground(); // Make the background of WebView visible again
   }
@@ -160,7 +159,8 @@ currentTime!: string;
     const doc = await passengerRef.get().toPromise();
 
     if (!doc?.exists) {
-      alert("Passenger not found");
+   
+      this.auth.presentAlert("Error", "Passenger not found");
       return 'Passenger not found';
     }
 
@@ -170,12 +170,14 @@ currentTime!: string;
     alert(this.passenger?.passengerNames);//shows the name of a passenger
 
     if (!passenger || typeof passenger.balance !== 'number') {
-      alert('Invalid passenger data');
+     
+      this.auth.presentAlert("Error", "Invalid passenger data");
       return 'Invalid passenger data';
     }
 
     if (passenger.balance < this.price) {
-      alert('Insufficient balance');
+    
+      this.auth.presentAlert("Error", 'Insufficient balance');
       return 'Insufficient balance';
     }
 
@@ -201,10 +203,11 @@ this.transaction = {
 };
 
 this. addTransaction();
-alert(`New balance for passenger ${uid} is ${newBalance}`);
+
 }
 else{
   alert("amount and location is missing");
+  this.auth.presentAlert("Error", "Select a route");
 }
     return `New balance for passenger ${uid} is ${newBalance}`;
   }

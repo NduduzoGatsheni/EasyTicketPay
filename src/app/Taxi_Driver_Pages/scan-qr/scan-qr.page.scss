@@ -59,11 +59,14 @@ ion-content{
   .paying-passenger {
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 0px;
     margin: 0;
+  
+
     padding: 0;
     place-content: end; 
     color:white;
+    padding-bottom: 60px;
 }
 
      .fixed-container{

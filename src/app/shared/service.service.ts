@@ -139,7 +139,7 @@ export class ServiceService {
     return this.firestore.collection('transactions').snapshotChanges();
   }
 
-  getTransactionsById(passengerId: string): Observable<any[]> {
-    return this.firestore.collection('transactions', ref => ref.where('passengerId', '==', passengerId)).snapshotChanges();
+  getTransactionsById(v_Id: string): Observable<any[]> {
+    return this.firestore.collection('transactions', ref => ref.where('VehicleId', '==', v_Id)).snapshotChanges();
   }
 }
