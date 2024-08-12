@@ -5,6 +5,7 @@ import { passenger } from '../service/passenger';
 import firebase from 'firebase/compat/app';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class HomePage implements OnInit {
     passengerPassword: ''
   };
   queryParamsSubscription: Subscription | undefined;
-  constructor(private authService: AuthService,private serv:ServiceService,private route: ActivatedRoute) {
+  constructor(private authService: AuthService,private serv:ServiceService,private route: ActivatedRoute, private router: Router) {
    }
 
    ngOnInit(): void {
@@ -59,6 +60,10 @@ export class HomePage implements OnInit {
         alert('User not found!!');
       }
     });
+  }
+
+  navigateTo(){
+    this.router.navigate(['/taxi'], { queryParams: { uid: this.uid } });
   }
 
   search(){

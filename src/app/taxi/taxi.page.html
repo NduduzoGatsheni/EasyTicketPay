@@ -21,83 +21,20 @@
   </div>
   </div>
   <div class="main-container">
-    <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
+  <div *ngFor="let dateGroup of groupedTransactions | keyvalue">
+    <!-- <div class="main-container"> -->
+      <h4 class="date-tag">{{ dateGroup.key }}</h4>
+      <table>
+        <tbody>
+          <tr *ngFor="let transaction of dateGroup.value">
+            <td>{{ transaction.From_To }}</td>
+            <td>{{ transaction.datetime }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+ 
+  </div>
+<!-- </div> -->
 </ion-content>

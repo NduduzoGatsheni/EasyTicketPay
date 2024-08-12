@@ -6,7 +6,7 @@ import { Vehicle } from 'src/app/service/vehicle';
 import firebase from 'firebase/compat/app';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -19,7 +19,7 @@ export class DashboardPage implements OnInit {
   user!:any;
   vehicle:Vehicle;
   queryParamsSubscription: Subscription | undefined;
-  constructor(private authService: AuthService,private serv:ServiceService,private route: ActivatedRoute) { 
+  constructor(private authService: AuthService,private serv:ServiceService,private route: ActivatedRoute,private navCtrl: NavController) { 
 
     this.vehicle = {
       vehicleId:'',
@@ -60,4 +60,10 @@ export class DashboardPage implements OnInit {
       });
   }
 
+  goToHistory() {
+   
+    this.navCtrl.navigateForward(['//driver-tabs/cliam-history'], {
+      queryParams: { uid: this.uid }
+    });
+  }
 }
