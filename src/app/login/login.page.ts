@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+    
   }
   navigateToDashboard() {
     if (this.selectedDashboard === 'passenger') {

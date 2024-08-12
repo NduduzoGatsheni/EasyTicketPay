@@ -7,14 +7,6 @@ import { AuthService } from '../shared/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 
-// interface Vehicle {
-//   vehicleId:string;
-//   ownerName: string;
-//   email: string;
-//   transportType: string;
-//   transportNumber: string;
-//   password: string;
-// }
 
 @Injectable({
   providedIn: 'root'
