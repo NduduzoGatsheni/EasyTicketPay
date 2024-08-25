@@ -3,7 +3,7 @@
 
   <div class="header">
     <ion-row class="title">
-      <ion-col><a href="/tabs/home"><ion-icon name="chevron-back-outline"></ion-icon></a></ion-col>
+      <ion-col><ion-icon name="chevron-back-outline"  [routerLink]="['/tabs/home']"></ion-icon></ion-col>
       <ion-col><h1 style="text-align: center;">History</h1></ion-col>
       <ion-col  class="menu"> <ion-icon name="menu-outline"></ion-icon></ion-col>
     </ion-row>
@@ -21,83 +21,21 @@
   </div>
   </div>
   <div class="main-container">
-    <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-        <h4 class="date-tag">Today</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
-
-    <h4 class="date-tag">Tue Mar 05 2024</h4>
-        <tr>
-          <td>Mlazi - Durban</td><td>08:40</td>
-        </tr>
-        <tr>
-          <td>Durban- Mlazi</td><td>16:40</td>
-        </tr>
+    <!-- <div class="main-container"> -->
+      <div *ngFor="let dateGroup of groupedTransactions | keyvalue">
+        <!-- <div class="main-container"> -->
+          <h4 class="date-tag">{{ dateGroup.key }}</h4>
+          <table>
+            <tbody>
+              <tr *ngFor="let transaction of dateGroup.value">
+                <td>{{ transaction.From_To }}</td>
+                <td>{{ transaction.datetime }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <!-- </div> -->
+     
   </div>
 </div>
 </ion-content>

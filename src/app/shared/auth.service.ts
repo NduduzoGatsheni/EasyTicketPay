@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseError } from 'firebase/app';
-import { AlertController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ServiceService } from './service.service';
-import { Observable, map } from 'rxjs';
 import { passenger } from '../service/passenger';
 import { Vehicle } from '../service/vehicle';
 import { take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { User } from 'firebase/auth';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from 'firebase/auth'
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,33 @@ export class AuthService {
   email: string="";
   uid!:any;
   vehicle: Vehicle | undefined;
+  private currentUser: User | null = null;
+  private userUid: string | null = null;
+  private user$: Observable<User | null>; 
 
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore,
               private alertController: AlertController,
               public loadingController: LoadingController,
-              private router: Router) { }
+              private router: Router,
+              private toastController: ToastController
+       ) {
+        this.user$ = this.afAuth.authState as Observable<User | null>;
+                }
+              
+                getCurrentUser(): Observable<User | null> {
+                  return this.user$;
+                }
+    
+                getUserUid(): Observable<string | null> {
+                  return this.user$.pipe(
+                    map((user: User | null) => user ? user.uid : null)
+                  );
+                }
+              
+              
+              
+
 
 getCurrentUserUID(): Promise<string | null> {
 return new Promise<string | null>((resolve, reject) => {
@@ -53,6 +75,16 @@ async presentLoader() {
     await loading.present();
   }
 
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      color: color, 
+      duration: 2000, 
+      position: 'top',
+    });
+    toast.present();
+  }
+
 async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
@@ -69,16 +101,27 @@ async presentAlert(header: string, message: string) {
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     try {
       if (emailRegex.test(email)) {
-      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-      if (userCredential && userCredential.user) {
-        const uid = userCredential.user.uid;
+     
+
+      const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      const user = credential.user;
+      
+      if (user && !user.emailVerified) {
+        this.presentToast('Please verify your email before logging in.', 'warning');
+        await this.afAuth.signOut();
+        return;
+      }
+      if (user && credential.user) {
+        const uid = credential.user.uid;
         this.email = email;
         this.uid = uid;
         alert(uid);
         this.router.navigate(['/tabs/home'], { queryParams: { uid: uid} });
+        return;
       }
      else {
         this.presentAlert('Error', 'The User not found.');
+        return;
       }
     }
     if (!emailRegex.test(email)) {

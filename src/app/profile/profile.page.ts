@@ -3,7 +3,9 @@ import { MenuController } from '@ionic/angular';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ServiceService } from '../shared/service.service';
 import { passenger } from '../service/passenger';
-
+import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
+import { User } from 'firebase/auth';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -17,13 +19,14 @@ export class ProfilePage implements OnInit {
   amount!:string;
   name:string='';
   uid!:string;
+  user: User | null = null; 
   passenger: passenger;
-  constructor(private serv:ServiceService) {
+  constructor(private serv:ServiceService,private authService: AuthService,private router: Router) {
     this.passenger = {
-      passengerId: '9qdkqV52b1cqkRgDwnTmBYkCtOC2',
-      passengerNames: 'Fezeka',
-      passengerEmail: 'fezi@gmail.com',
-      passengerPassword: '09988776'  
+      passengerId: '',
+      passengerNames: '',
+      passengerEmail: '',
+      passengerPassword: ''  
     };
    }
   ngOnInit() {

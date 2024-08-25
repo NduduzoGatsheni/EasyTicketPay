@@ -138,7 +138,7 @@ currentTime!: string;
 
     const permission = await BarcodeScanner.checkPermission({ force: true });
     if (!permission.granted) {
-      this.subtractBalance("9qdkqV52b1cqkRgDwnTmBYkCtOC2");
+      this.subtractBalance("cGuGwo93q6ZGjadLDvh0vtEHoe52");
       this.scanResult = 'Camera permission is not granted';
       return;
     }

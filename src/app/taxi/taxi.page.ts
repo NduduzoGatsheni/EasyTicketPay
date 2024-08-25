@@ -22,7 +22,7 @@ export class TaxiPage implements OnInit {
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
     
       const  data= params['uid'];
-      alert(data);
+      // alert(data);
       if(data){
         this.passengerId = data;
       }
