@@ -4,9 +4,12 @@ import { passenger } from 'src/app/service/passenger';
 import { Transaction } from 'src/app/service/Transactions';
 import { ServiceService } from 'src/app/shared/service.service';
 import { AuthService } from 'src/app/shared/auth.service';
+  import { Plugins } from '@capacitor/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+
+// import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 @Component({
   selector: 'app-scan-qr',
   templateUrl: './scan-qr.page.html',
@@ -134,6 +137,8 @@ currentTime!: string;
   removePassenger(passenger:any) {
     this.passengers = this.passengers.filter(p => p !== passenger);
   }
+
+
   // async startScan() {
 
   //   const permission = await BarcodeScanner.checkPermission({ force: true });
@@ -153,111 +158,51 @@ currentTime!: string;
   //   }
   //   BarcodeScanner.showBackground(); // Make the background of WebView visible again
   // }
-  // async startScan() {
-  //   try {
-  //     // Check and request permission if necessary
-  //     const permission = await BarcodeScanner.checkPermission({ force: true });
-  
-  //     if (!permission.granted) {
-  //       // If permission is not granted after the request
-  //       this.scanResult = 'Camera permission was denied';
-  //       this.auth.presentAlert("Permission Denied", "Camera access is required to scan barcodes. Please enable it in your device settings.");
-  //       return;
-  //     }
-  
-  //     // Permission granted, proceed with scanning
-  //     BarcodeScanner.hideBackground(); // Make the background of WebView transparent
-  
-  //     const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
-  
-  //     if (result.hasContent) {
-  //       this.scanResult = result.content; // Process the scan result
-  //       this.subtractBalance(this.scanResult);
-  //     } else {
-  //       this.scanResult = 'No content found';
-  //       this.auth.presentAlert("Error", "No content found");
-  //     }
-  //   } catch (error) {
-  //     console.error('Barcode scanning error:', error);
-  //     this.auth.presentAlert("Error", "An error occurred while trying to scan. Please try again.");
-  //   } finally {
-  //     BarcodeScanner.showBackground(); // Make the background of WebView visible again
-  //   }
-  // }
 
-  // async requestCameraPermission() {
-  //   const status = await Permissions.request({
-  //     name: 'camera',
-  //   });
+async startScan() {
+  try {
+    console.log('Starting scan process...');
+    return this.proceedWithScan();
+  } catch (error) {
+    console.error('Error in startScan:', error);
+    this.scanResult = 'An error occurred while trying to scan.';
+    this.auth.presentAlert("Error", this.scanResult);
+  }
+}
 
-  //   if (status.granted) {
-  //     this.startScan(); // Call your scan function
-  //   } else {
-  //     this.auth.presentAlert(
-  //       "Permission Denied",
-  //       "Camera access is required to scan barcodes. Please enable it in your device settings."
-  //     );
-  //   }
+async proceedWithScan() {
+  try {
+    console.log('Preparing to start scan...');
+    await BarcodeScanner.hideBackground();
+    
+    // Configure scanner
+    await BarcodeScanner.prepare({
+      targetedFormats: ['QR_CODE', 'EAN_13', 'EAN_8', 'CODE_128'] // Add or remove formats as needed
+    });
 
-  // }
-  async requestCameraPermission() {
-    const permission = await BarcodeScanner.checkPermission({ force: true });
-
-    if (permission.granted) {
-      this.startScan(); // Call your scan function
+    console.log('Starting scan with back camera...');
+    const result = await BarcodeScanner.startScan();
+    console.log('Scan result:', result);
+    
+    if (result.hasContent) {
+      this.scanResult = result.content;
+      this.subtractBalance(this.scanResult);
     } else {
-      this.auth.presentAlert(
-        "Permission Denied",
-        "Camera access is required to scan barcodes. Please enable it in your device settings."
-      );
+      this.scanResult = 'No content found';
+      this.auth.presentAlert("Error", "No content found");
     }
+  } catch (error) {
+    console.error('Error during scan:', error);
+    this.scanResult = 'An error occurred during the scan.';
+    this.auth.presentAlert("Scan Error", this.scanResult);
+  } finally {
+    console.log('Showing background...');
+    await BarcodeScanner.showBackground();
+    await BarcodeScanner.stopScan();
   }
+}
 
 
-
-
-
-
-
-
-  async startScan() {
-    try {
-      // Request camera permission if not already granted
-      const permission = await BarcodeScanner.checkPermission({ force: true });
-  
-      if (!permission.granted) {
-        // If permission is denied, show an alert
-        this.scanResult = 'Camera permission was denied';
-        this.auth.presentAlert(
-          "Permission Denied",
-          "Camera access is required to scan barcodes. Please enable it in your device settings."
-        );
-        return;
-      }
-  
-      // Permission granted, proceed with scanning
-      BarcodeScanner.hideBackground(); // Make the background of WebView transparent
-  
-      const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
-  
-      if (result.hasContent) {
-        this.scanResult = result.content; // Process the scan result
-        this.subtractBalance(this.scanResult);
-      } else {
-        this.scanResult = 'No content found';
-        this.auth.presentAlert("Error", "No content found");
-      }
-    } catch (error) {
-      console.error('Barcode scanning error:', error);
-      this.auth.presentAlert(
-        "Error",
-        "An error occurred while trying to scan. Please try again."
-      );
-    } finally {
-      BarcodeScanner.showBackground(); // Make the background of WebView visible again
-    }
-  }
-  
   async subtractBalance(uid: string): Promise<string> {
     const passengerRef = this.firestore.collection('passengers').doc<passenger>(uid);
     const doc = await passengerRef.get().toPromise();

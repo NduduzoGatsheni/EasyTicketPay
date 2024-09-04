@@ -80,6 +80,10 @@ const routes: Routes = [
   },  {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'personal-card',
+    loadChildren: () => import('./personal-card/personal-card.module').then( m => m.PersonalCardPageModule)
   }
 
 ];
