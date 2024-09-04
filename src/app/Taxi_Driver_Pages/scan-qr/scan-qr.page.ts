@@ -4,9 +4,14 @@ import { passenger } from 'src/app/service/passenger';
 import { Transaction } from 'src/app/service/Transactions';
 import { ServiceService } from 'src/app/shared/service.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+// import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { Camera, CameraDirection, CameraResultType } from '@capacitor/camera';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
+// constructor() { }
+
 @Component({
   selector: 'app-scan-qr',
   templateUrl: './scan-qr.page.html',
@@ -25,35 +30,32 @@ export class ScanQRPage implements OnInit {
   scannerPreview!: ElementRef;
   scanResult: string = '';
 
-
-// passengers!: Array<{name: string, money_in: number }>;
-passengers: Array<{ name: string; money_in: number }> = []; // Initialized as an empty array
-
+passengers: Array<{ name: string; money_in: number }> = []; 
 payingPassenger: {name: string, money_in: number };
 
 place:string="";
 price:number=0;
 
 locations =[{location:"Durban - South Beach",amount:10},
-  {location:"Durban - Umlazi",amount:20},
-  {location:"Durban - Kwashu",amount:25},
-  {location:"Durban - Mont_Clair",amount:18},
-  {location:"Durban - Mayville",amount:18},
-  {location:"Durban - Musgrave",amount:10},
-  {location:"Durban - Pagate",amount:30},
-  {location:"Durban - Velurem",amount:34},
-  {location:"Durban - Lovu",amount:28},
-  {location:"Durban - Umkhomazi",amount:40},
-  {location:"Durban - clair_mont",amount:40},
-  {location:"Durban - clair_estate",amount:25},
-  {location:"Durban - New German",amount:18},
-  {location:"Durban - Pine Town",amount:24},
-  {location:"Durban - Stanger",amount:60},
-  {location:"Durban - Ballito",amount:40},
-  {location:"Durban - Nanda",amount:34},
-  {location:"Durban - Mdloti",amount:28},
-  {location:"Durban - Efolweni",amount:55}
-]
+            {location:"Durban - Umlazi",amount:20},
+            {location:"Durban - Kwashu",amount:25},
+            {location:"Durban - Mont_Clair",amount:18},
+            {location:"Durban - Mayville",amount:18},
+            {location:"Durban - Musgrave",amount:10},
+            {location:"Durban - Pagate",amount:30},
+            {location:"Durban - Velurem",amount:34},
+            {location:"Durban - Lovu",amount:28},
+            {location:"Durban - Umkhomazi",amount:40},
+            {location:"Durban - clair_mont",amount:40},
+            {location:"Durban - clair_estate",amount:25},
+            {location:"Durban - New German",amount:18},
+            {location:"Durban - Pine Town",amount:24},
+            {location:"Durban - Stanger",amount:60},
+            {location:"Durban - Ballito",amount:40},
+            {location:"Durban - Nanda",amount:34},
+            {location:"Durban - Mdloti",amount:28},
+            {location:"Durban - Efolweni",amount:55}
+            ]
 
 transaction: Transaction = {
   TransactionID: '',
@@ -67,7 +69,9 @@ currentTime!: string;
 
   constructor(private serv:ServiceService,
     private firestore: AngularFirestore,
-  private auth: AuthService) {
+  private auth: AuthService,
+  private barcodeScanner: BarcodeScanner) {
+
     this.vehicle = {
       vehicleId:'',
       ownerName: '',
@@ -76,16 +80,16 @@ currentTime!: string;
       transportNumber: '',
       password: ''
     }
+
     this.passenger={
       passengerId:'',
       passengerNames:'',
       passengerEmail:'',
       passengerPassword:'',
    }
-  //  this.passengers =[
-  //   {name:"",money_in: 0}
-  // ];
+ 
   this.payingPassenger={name:"",money_in: 0};
+
    }
 
   ngOnInit() {
@@ -107,9 +111,6 @@ currentTime!: string;
     const selectedLoc = this.locations.find(loc => loc.location === this.place);
     if (selectedLoc) {
       this.price = selectedLoc.amount;
-
-
-      // alert('Selected Amount:'+ this.price);
     }
   }
 
@@ -119,7 +120,6 @@ currentTime!: string;
         console.log('Transaction added successfully');
         this.auth.presentAlert("Transaction Added", "The transaction was added successfully.");
 
-        // Optionally, reset the transaction object
         this.transaction = {
           TransactionID: '',
           VehicleId: '',
@@ -131,29 +131,32 @@ currentTime!: string;
       })
       .catch(error => console.error('Error adding transaction: ', error)  );
   }
+
   removePassenger(passenger:any) {
     this.passengers = this.passengers.filter(p => p !== passenger);
   }
+
   async startScan() {
-
-    const permission = await BarcodeScanner.checkPermission({ force: true });
-    if (!permission.granted) {
-      this.subtractBalance("cGuGwo93q6ZGjadLDvh0vtEHoe52");
-      this.scanResult = 'Camera permission is not granted';
-      return;
+    try {
+      const barcodeData = await this.barcodeScanner.scan();
+  
+      if (barcodeData.text) {
+        alert("Barcode scanned successfully");
+  
+        // Process the scanned data
+        this.scanResult = barcodeData.text;
+        this.subtractBalance(this.scanResult);
+      } else {
+        this.scanResult = 'No barcode data';
+        this.auth.presentAlert("Error", "No barcode data");
+      }
+    } catch (error) {
+      console.error('Error scanning barcode', error);
+      this.scanResult = 'Error scanning barcode';
+      this.auth.presentAlert("Error", "Error scanning barcode");
     }
-    BarcodeScanner.hideBackground(); // Make the background of WebView transparent
-    const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
-    if (result.hasContent) {
-      this.scanResult = result.content; // Process the scan result
-      this.subtractBalance(this.scanResult);
-    } else {
-      this.scanResult = 'No content found';
-      this.auth.presentAlert("Error", "No content found");
-    }
-    BarcodeScanner.showBackground(); // Make the background of WebView visible again
   }
-
+  
   async subtractBalance(uid: string): Promise<string> {
     const passengerRef = this.firestore.collection('passengers').doc<passenger>(uid);
     const doc = await passengerRef.get().toPromise();
@@ -228,7 +231,7 @@ else{
   
 
   stopScan() {
-    BarcodeScanner.stopScan();
-    BarcodeScanner.showBackground(); // Make the background of WebView visible again
+    // BarcodeScanner.stopScan();
+    // BarcodeScanner.showBackground(); // Make the background of WebView visible again
   }
 }
