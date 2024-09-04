@@ -1,7 +1,6 @@
-
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../shared/service.service';
 import { map } from 'rxjs/operators';
 
@@ -15,6 +14,7 @@ export class TaxiPage implements OnInit {
   groupedTransactions: Record<string, any[]> = {};
   passengerId: string = '';
   queryParamsSubscription: Subscription | undefined;
+
   constructor(private service: ServiceService,private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -22,9 +22,12 @@ export class TaxiPage implements OnInit {
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
     
       const  data= params['uid'];
+    //  ;
       // alert(data);
       if(data){
+        // alert("ndim oyo");
         this.passengerId = data;
+        alert("ngila");
       }
       });
       this.loadTransactions();
@@ -35,11 +38,17 @@ export class TaxiPage implements OnInit {
 
   loadTransactions() {
     const DateConstructor = Date;
-    
-    this.service.getTransactionsById(this.passengerId).pipe(
+    alert(this.passengerId);
+    //note
+    this.service.getTransactionsBy_PassengerId(this.passengerId).pipe(
       map(actions => actions.map((a:any) => {
         const data: any = a.payload.doc.data();
+
+        alert(JSON.stringify(data));
+
         const id = a.payload.doc.id;
+        console.log(a.payload.doc);
+
         return { id, ...data };
       }))
     ).subscribe(transactions => {
@@ -47,6 +56,7 @@ export class TaxiPage implements OnInit {
       for (const transaction of transactions) {
         const date = transaction.datetime;
         transaction.datetime = this.formatDate(date);
+        console.log(transaction);
         this.transactions.push(transaction);
       }
       this.transactions.sort((a, b) => {

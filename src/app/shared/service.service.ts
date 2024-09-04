@@ -7,7 +7,6 @@ import { AuthService } from '../shared/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,12 +18,14 @@ export class ServiceService {
 
   constructor(private afAuth: AngularFireAuth,private firestore: AngularFirestore,private authService: AuthService) 
   { 
+
     this.passenger = {
       passengerId: '',
       passengerNames: '',
       passengerEmail: '',
       passengerPassword: ''
     };
+
     this.vehicle={
       vehicleId:'',
       ownerName: '',
@@ -124,14 +125,15 @@ export class ServiceService {
     });
   }
 
-  // getTransactions(): Observable<any> {
-  //   return this.firestore.collection("transactions").valueChanges();
-  // }
   getTransactions(): Observable<any[]> {
     return this.firestore.collection('transactions').snapshotChanges();
   }
 
   getTransactionsById(v_Id: string): Observable<any[]> {
     return this.firestore.collection('transactions', ref => ref.where('VehicleId', '==', v_Id)).snapshotChanges();
+  }
+
+  getTransactionsBy_PassengerId(id: string): Observable<any[]> {
+    return this.firestore.collection('transactions', ref => ref.where('passengerId', '==', id)).snapshotChanges();
   }
 }

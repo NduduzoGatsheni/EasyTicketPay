@@ -4,14 +4,12 @@ import { passenger } from 'src/app/service/passenger';
 import { Transaction } from 'src/app/service/Transactions';
 import { ServiceService } from 'src/app/shared/service.service';
 import { AuthService } from 'src/app/shared/auth.service';
-// import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+  import { Plugins } from '@capacitor/core';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { Camera, CameraDirection, CameraResultType } from '@capacitor/camera';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
-// constructor() { }
-
+// import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 @Component({
   selector: 'app-scan-qr',
   templateUrl: './scan-qr.page.html',
@@ -70,7 +68,7 @@ currentTime!: string;
   constructor(private serv:ServiceService,
     private firestore: AngularFirestore,
   private auth: AuthService,
-  private barcodeScanner: BarcodeScanner) {
+) {
 
     this.vehicle = {
       vehicleId:'',
@@ -136,27 +134,71 @@ currentTime!: string;
     this.passengers = this.passengers.filter(p => p !== passenger);
   }
 
-  async startScan() {
-    try {
-      const barcodeData = await this.barcodeScanner.scan();
-  
-      if (barcodeData.text) {
-        alert("Barcode scanned successfully");
-  
-        // Process the scanned data
-        this.scanResult = barcodeData.text;
-        this.subtractBalance(this.scanResult);
-      } else {
-        this.scanResult = 'No barcode data';
-        this.auth.presentAlert("Error", "No barcode data");
-      }
-    } catch (error) {
-      console.error('Error scanning barcode', error);
-      this.scanResult = 'Error scanning barcode';
-      this.auth.presentAlert("Error", "Error scanning barcode");
-    }
+
+  // async startScan() {
+
+  //   const permission = await BarcodeScanner.checkPermission({ force: true });
+  //   if (!permission.granted) {
+ 
+  //     this.scanResult = 'Camera permission is not granted';
+  //     return;
+  //   }
+  //   BarcodeScanner.hideBackground(); // Make the background of WebView transparent
+  //   const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
+  //   if (result.hasContent) {
+  //     this.scanResult = result.content; // Process the scan result
+  //     this.subtractBalance(this.scanResult);
+  //   } else {
+  //     this.scanResult = 'No content found';
+  //     this.auth.presentAlert("Error", "No content found");
+  //   }
+  //   BarcodeScanner.showBackground(); // Make the background of WebView visible again
+  // }
+
+async startScan() {
+  try {
+    console.log('Starting scan process...');
+    return this.proceedWithScan();
+  } catch (error) {
+    console.error('Error in startScan:', error);
+    this.scanResult = 'An error occurred while trying to scan.';
+    this.auth.presentAlert("Error", this.scanResult);
   }
-  
+}
+
+async proceedWithScan() {
+  try {
+    console.log('Preparing to start scan...');
+    await BarcodeScanner.hideBackground();
+    
+    // Configure scanner
+    await BarcodeScanner.prepare({
+      targetedFormats: ['QR_CODE', 'EAN_13', 'EAN_8', 'CODE_128'] // Add or remove formats as needed
+    });
+
+    console.log('Starting scan with back camera...');
+    const result = await BarcodeScanner.startScan();
+    console.log('Scan result:', result);
+    
+    if (result.hasContent) {
+      this.scanResult = result.content;
+      this.subtractBalance(this.scanResult);
+    } else {
+      this.scanResult = 'No content found';
+      this.auth.presentAlert("Error", "No content found");
+    }
+  } catch (error) {
+    console.error('Error during scan:', error);
+    this.scanResult = 'An error occurred during the scan.';
+    this.auth.presentAlert("Scan Error", this.scanResult);
+  } finally {
+    console.log('Showing background...');
+    await BarcodeScanner.showBackground();
+    await BarcodeScanner.stopScan();
+  }
+}
+
+
   async subtractBalance(uid: string): Promise<string> {
     const passengerRef = this.firestore.collection('passengers').doc<passenger>(uid);
     const doc = await passengerRef.get().toPromise();
