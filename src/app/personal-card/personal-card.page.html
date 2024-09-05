@@ -1,9 +1,53 @@
-<!-- // personal-card.component.html -->
+<!-- // personal-card.component.html
 <ion-card class="personal-card">
   <ion-card-header>
-    <ion-card-title>{{ name }}</ion-card-title>
-    <ion-card-subtitle>{{ title }}</ion-card-subtitle>
+    <div class="header">
+      <div class="first-side">
+        <ion-card-title>{{ name }}</ion-card-title>
+        <ion-card-subtitle>{{ title }}</ion-card-subtitle>
+      </div>
+      <div class="second-side">
+        <img src="/src/assets/azande.png" alt=""/>
+      </div>
+  
+  </div>
+
   </ion-card-header>
+  <ion-card-content>
+    <div class="card-content">
+      <div class="personal-info">
+        <ion-item lines="none">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-label>{{ email }}</ion-label>  <br>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+        
+          <ion-label>{{ phone }}</ion-label>
+          <br>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label>{{ address }}</ion-label><br>
+        </ion-item>
+      </div>
+      <div class="qr-code">
+        <qrcode [qrdata]="qrCodeData" [width]="160" [errorCorrectionLevel]="'M'"></qrcode>
+       
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card> -->
+<!-- personal-card.component.html -->
+<ion-card class="personal-card">
+  <div class="card-header">
+    <img src="/src/assets/logo.png" alt="Company Logo" class="logo"/>
+    <div class="header-content">
+      <ion-card-title>{{ name }}</ion-card-title>
+      <ion-card-subtitle>{{ title }}</ion-card-subtitle>
+    </div>
+    <img src="/src/assets/azande.png" alt="Profile Picture" class="profile-pic"/>
+  </div>
   <ion-card-content>
     <div class="card-content">
       <div class="personal-info">
@@ -21,9 +65,117 @@
         </ion-item>
       </div>
       <div class="qr-code">
-        <qrcode [qrdata]="qrCodeData" [width]="160" [errorCorrectionLevel]="'M'"></qrcode>
-        <!-- <qrcode [qrdata]="qrCodeData" [width]="150" [errorCorrectionLevel]="'M'"></qrcode> -->
+        <qrcode [qrdata]="qrCodeData" [width]="120" [errorCorrectionLevel]="'M'"></qrcode>
       </div>
     </div>
   </ion-card-content>
 </ion-card>
+
+<style>
+.personal-card {
+  max-width: 600px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #4a90e2, #63b3ed);
+  color: white;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 15px;
+}
+
+.header-content {
+  flex-grow: 1;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+}
+
+ion-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+ion-card-subtitle {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.personal-info {
+  flex: 1;
+}
+
+.personal-info ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.personal-info ion-icon {
+  color: #4a90e2;
+  margin-right: 10px;
+}
+
+.qr-code {
+  margin-left: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media print {
+  .personal-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+  
+  .card-header {
+    background: #f0f0f0;
+    color: #333;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .logo, .profile-pic {
+    margin: 10px 0;
+  }
+  
+  .card-content {
+    flex-direction: column;
+  }
+  
+  .qr-code {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+</style>

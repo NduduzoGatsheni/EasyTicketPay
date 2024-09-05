@@ -1,27 +1,28 @@
-.personal-card {
-    max-width: 600px;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+// .personal-card {
+//     max-width: 600px;
+//     margin: auto;
+//     background-color: #f8f8f8;
+//     border-radius: 10px;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   }
   
-  .card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+//   .card-content {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//   }
   
-  .personal-info {
-    flex: 1;
-  }
+//   .personal-info {
+//     flex: 1;
+//   }
   
-  .qr-code {
-    margin-left: 20px;
-  }
+//   .qr-code {
+//     margin-left: 20px;
+//   }
   
-  @media print {
-    .personal-card {
-      box-shadow: none;
-      border: 1px solid #ccc;
-    }
-  }
+//   @media print {
+//     .personal-card {
+//       box-shadow: none;
+//       border: 1px solid #ccc;
+//     }
+//   }

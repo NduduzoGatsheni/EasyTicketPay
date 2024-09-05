@@ -13,7 +13,7 @@ export class PersonalCardPage implements OnInit {
   }
 
   @Input() name: string = 'NDUDUZO NDLOVU';
-  @Input() title: string = 'MR';
+  @Input() title: string = 'EasyPayTicket';
   @Input() email: string = 'nduduzondlovu635@gmail.com';
   @Input() phone: string = '074 0998713';
   @Input() address: string = '24 mut road';

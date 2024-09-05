@@ -134,27 +134,6 @@ currentTime!: string;
     this.passengers = this.passengers.filter(p => p !== passenger);
   }
 
-
-  // async startScan() {
-
-  //   const permission = await BarcodeScanner.checkPermission({ force: true });
-  //   if (!permission.granted) {
- 
-  //     this.scanResult = 'Camera permission is not granted';
-  //     return;
-  //   }
-  //   BarcodeScanner.hideBackground(); // Make the background of WebView transparent
-  //   const result = await BarcodeScanner.startScan(); // Start scanning and wait for a result
-  //   if (result.hasContent) {
-  //     this.scanResult = result.content; // Process the scan result
-  //     this.subtractBalance(this.scanResult);
-  //   } else {
-  //     this.scanResult = 'No content found';
-  //     this.auth.presentAlert("Error", "No content found");
-  //   }
-  //   BarcodeScanner.showBackground(); // Make the background of WebView visible again
-  // }
-
 async startScan() {
   try {
     console.log('Starting scan process...');
@@ -273,7 +252,7 @@ else{
   
 
   stopScan() {
-    // BarcodeScanner.stopScan();
-    // BarcodeScanner.showBackground(); // Make the background of WebView visible again
+    BarcodeScanner.stopScan();
+    BarcodeScanner.showBackground(); 
   }
 }
