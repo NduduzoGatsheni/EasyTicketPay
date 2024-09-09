@@ -1,13 +1,39 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>view-card</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">view-card</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div class="personal-card-container">
+  <div class="personal-card">
+    <div class="card-header">
+      <img src="/src/assets/logo.png" alt="Company Logo" class="logo"/>
+      <div class="header-content">
+        <h1 class="card-title">{{ name }}</h1>
+        <h2 class="card-subtitle">{{ title }}</h2>
+      </div>
+      <img src="/src/assets/azande.png" alt="Profile Picture" class="profile-pic"/>
+    </div>
+    <div class="card-content">
+      <div class="personal-info">
+        <div class="info-item">
+          <span class="icon">📧</span>
+          <span class="label">{{ email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="icon">📞</span>
+          <span class="label">{{ phone }}</span>
+        </div>
+        <div class="info-item">
+          <span class="icon">📍</span>
+          <span class="label">{{ address }}</span>
+        </div>
+      </div>
+      <div class="qr-code">
+        <img src="/src/assets/qr-code.png" alt="QR Code" class="qr-code-img"/>
+      </div>
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="action-button print-button" onclick="printCard()">
+      <span class="button-icon">🖨️</span> Print Card
+    </button>
+    <button class="action-button temporal-button" onclick="createTemporalCard()">
+      <span class="button-icon">🕒</span> Temporal Card
+    </button>
+  </div>
+</div>

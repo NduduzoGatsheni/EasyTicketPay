@@ -1,28 +1,299 @@
-// .personal-card {
-//     max-width: 600px;
-//     margin: auto;
-//     background-color: #f8f8f8;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   }
+/* Header specific styles */
+ion-header.custom-header {
+    background: transparent;
+  }
   
-//   .card-content {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
+  ion-header.custom-header ion-toolbar {
+    --background: linear-gradient(135deg, #4a90e2, #63b3ed);
+    --color: #ffffff;
+    --border-color: transparent;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+  }
   
-//   .personal-info {
-//     flex: 1;
-//   }
+  ion-header.custom-header .header-content {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+  }
   
-//   .qr-code {
-//     margin-left: 20px;
-//   }
+  ion-header.custom-header .app-logo {
+    height: 32px;
+    margin-right: 12px;
+  }
   
-//   @media print {
-//     .personal-card {
-//       box-shadow: none;
-//       border: 1px solid #ccc;
-//     }
-//   }
+  ion-header.custom-header .page-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  
+  ion-header.custom-header ion-buttons {
+    --color: #ffffff;
+  }
+  
+  ion-header.custom-header ion-button {
+    --color: #ffffff;
+  }
+  
+  ion-header.custom-header ion-icon {
+    font-size: 24px;
+  }
+  
+  ion-header.custom-header ion-back-button {
+    --color: #ffffff;
+    --icon-font-size: 24px;
+  }
+  
+  ion-header.custom-header .logout-button {
+    --color: #ff4d4d;
+  }
+  
+  @media (max-width: 768px) {
+    ion-header.custom-header .app-logo {
+      height: 24px;
+    }
+    
+    ion-header.custom-header .page-name {
+      font-size: 1rem;
+    }
+    
+    ion-header.custom-header ion-icon {
+      font-size: 20px;
+    }
+  
+    ion-header.custom-header ion-back-button {
+      --icon-font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    ion-header.custom-header .page-name {
+      display: none;
+    }
+  
+    ion-header.custom-header .app-logo {
+      height: 20px;
+    }
+  }
+
+
+
+
+
+  .personal-card {
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    margin-top: 40px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-size: 16px; 
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #4a90e2, #63b3ed);
+    
+  }
+  
+  .logo {
+    width: 160px;
+    height: auto;
+    margin-right: 15px;
+    filter: drop-shadow(3px 3px 5px white);
+  }
+  
+  .header-content {
+    flex-grow: 1;
+  }
+  
+  .profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+  }
+  
+  ion-card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color:rgb(87, 87, 87);
+  }
+  
+  ion-card-subtitle {
+    font-size: 1em;
+    opacity: 0.8;
+    color:rgb(0, 36, 83);
+  }
+  
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .personal-info {
+    flex: 1;
+  }
+  
+  .personal-info ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+  }
+  
+  .personal-info ion-icon {
+    color: #4a90e2;
+    margin-right: 10px;
+  }
+  
+  .qr-code {
+    margin-left: 20px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media print {
+    .personal-card {
+      box-shadow: none;
+      border: 1px solid #ccc;
+    }
+    
+    .card-header {
+      background: #f0f0f0;
+      color: #333;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .personal-card {
+      font-size: 14px; /* Slightly reduce base font size */
+      transform: scale(0.9);
+      transform-origin: top center;
+    }
+    
+    .logo {
+      width: 50px;
+    }
+    
+    .profile-pic {
+      width: 70px;
+      height: 70px;
+    }
+    
+    .qr-code {
+      transform: scale(0.9);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .personal-card {
+      font-size: 12px; 
+      transform: scale(0.8);
+    }
+    
+    .logo {
+      width: 40px;
+    }
+    
+    .profile-pic {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .qr-code {
+      transform: scale(0.8);
+    }
+  }
+  
+  
+  
+  
+  .personal-card-container {
+      max-width: 600px;
+      width: 100%;
+      margin: auto;
+      font-family: Arial, sans-serif;
+    //   background-color: red;
+    }
+    
+    .personal-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    /* ... (previous styles remain the same) ... */
+    
+    .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  ion-button.action-button {
+    --border-radius: 8px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    flex: 1;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: none;
+    transition: all 0.3s ease;
+  }
+  
+  ion-button.action-button::part(native) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  ion-button.print-button {
+    --background: #4CAF50;
+    --background-hover: #45a049;
+    --color: white;
+  }
+  
+  ion-button.temporal-button {
+    --background: #2196F3;
+    --background-hover: #0b7dda;
+    --color: white;
+  }
+  
+  ion-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .button-container {
+      flex-direction: column;
+    }
+  
+    ion-button.action-button {
+      margin: 10px 0;
+    }
+  }
+  
+  @media print {
+  
+    .custom-header,
+    .button-container {
+      display: none !important; /* Hide header and buttons when printing */
+    }
+  
+  }

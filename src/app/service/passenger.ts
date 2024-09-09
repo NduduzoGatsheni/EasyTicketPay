@@ -4,4 +4,6 @@
     passengerNames:string;
     passengerEmail:string;
     passengerPassword:string;
+    phone?:string;
+    address?:string;
  }
