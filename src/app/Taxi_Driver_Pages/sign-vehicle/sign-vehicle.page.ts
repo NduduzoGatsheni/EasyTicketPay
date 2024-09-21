@@ -39,11 +39,6 @@ export class SignVehiclePage implements OnInit {
       return;
     }
 
-    // if (this.vehicle.password !== this.confirmPassword) {
-    //   console.log("Passwords do not match");
-    //   return;
-    // }
-
     try {
       const credential = await this.afAuth.createUserWithEmailAndPassword(this.vehicle.email, this.vehicle.password);
       const user = credential.user;

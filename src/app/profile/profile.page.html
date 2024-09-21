@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-toolbar  color="primary">
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
@@ -32,4 +32,52 @@
 </div>
 
 </ion-content>
-
+ -->
+ <ion-content [fullscreen]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <span slot="start" style="font-size: large;font-weight: bold;color:rgb(255, 255, 255);">
+      Balance: R {{passenger?.balance || 'N/A'}}
+    </span>  
+  </ion-toolbar>
+  <div class="main-container">
+    <ion-row class="centered-row">
+      <h1>My Account</h1>
+    </ion-row>
+    <ion-row class="centered-row">
+      <img class="image" src="/assets/icon.png" alt="profile-picture" />
+    </ion-row>
+    <ion-row class="centered-row">
+      <h2>{{name}}</h2>
+    </ion-row>
+    <ion-row class="centered-row">
+      <h2>{{passenger?.passengerEmail || 'N/A'}}</h2>
+    </ion-row>
+    <ion-row class="centered-row">
+      <ion-card class="bar-code">
+        <qrcode 
+          [qrdata]="qrCodeValue" 
+          [width]="160" 
+          [errorCorrectionLevel]="'M'"
+        ></qrcode>
+        <ion-button 
+          fill="clear" 
+          style="text-align: center; width:100%;margin-top:-18px;color:black;font-size: 18px;font-weight:bolder"
+          (click)="generateQrCode()"
+        >
+          QR Code
+        </ion-button>
+      </ion-card>
+    </ion-row>
+    <ion-row class="centered-row">
+      <ion-button 
+        style="color:white;--background: green;font-size:20px;font-weight: bold;margin-top:15px;height:10px;"  
+        routerLink="/personal-card"
+      >
+        View Card Online
+      </ion-button>
+    </ion-row>
+  </div>
+</ion-content>

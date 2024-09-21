@@ -5,7 +5,7 @@ import { Transaction } from '../service/Transactions';
 import { Vehicle } from '../service/vehicle';
 import { AuthService } from '../shared/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,19 @@ export class ServiceService {
   getUserByUid(uid: string): Observable<passenger[]> {
     return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid)).valueChanges();
   }
+
+  getByUid(uid: string): Observable<passenger[]> {
+    return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid))
+      .snapshotChanges()
+      .pipe(
+        map((actions: any[]) => actions.map(a => {
+          const data = a.payload.doc.data() as passenger;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+ 
   updatePassenger(passengerId: string, updatedPassenger: any): Promise<void> {
     return this.firestore.collection('passengers').doc(passengerId).update(updatedPassenger);
   }
@@ -70,6 +83,7 @@ export class ServiceService {
   async signUp(passenger:passenger, uid:string ): Promise<void> {
     try {
         passenger.passengerId = uid;
+        
         await this.firestore.collection('passengers').doc(passenger.passengerId).set({
           passengerNames: passenger.passengerNames,
           passengerEmail: passenger.passengerEmail,

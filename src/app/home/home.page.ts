@@ -24,7 +24,8 @@ export class HomePage implements OnInit {
     passengerId: '',
     passengerNames: '',
     passengerEmail: '',
-    passengerPassword: ''
+    passengerPassword: '',
+    balance:0
   };
 
   constructor(private authService: AuthService, private serv: ServiceService, private router: Router) {}
@@ -42,6 +43,13 @@ export class HomePage implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+  getBonus(): number {
+    return this.pass.balance ? this.pass.balance / 5 : 0;
+  }
+
+  getTotal(): number {
+    return this.pass.balance ? this.pass.balance + this.getBonus() : 0;
   }
 
   loadUserData() {

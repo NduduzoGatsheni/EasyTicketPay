@@ -29,10 +29,13 @@ export class SignupPage implements OnInit {
     try {
       const credential = await this.afAuth.createUserWithEmailAndPassword(this.passenger.passengerEmail, this.passenger.passengerPassword);
       const user = credential.user;
+    
       
       if (user) {
         await user.sendEmailVerification();
-        this.serv.signUp(this.passenger, user.uid);
+       
+
+        await this.serv.signUp(this.passenger, user.uid);
         this.authService.presentToast('Signup process initiated. Please check your email to verify your account.', 'success');
         this.clearFields();
         await this.afAuth.signOut();

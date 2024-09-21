@@ -105,7 +105,7 @@ async presentAlert(header: string, message: string) {
 
       const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
       const user = credential.user;
-      
+      alert(user);
       if (user && !user.emailVerified) {
         this.presentToast('Please verify your email before logging in.', 'warning');
         await this.afAuth.signOut();
@@ -120,7 +120,7 @@ async presentAlert(header: string, message: string) {
         return;
       }
      else {
-        this.presentAlert('Error', 'The User not found.');
+        // this.presentAlert('Error', 'The User not found.');
         return;
       }
     }
@@ -168,3 +168,4 @@ async presentAlert(header: string, message: string) {
   }
 
 }
+

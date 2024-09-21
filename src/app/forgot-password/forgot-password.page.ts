@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,10 +15,18 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() { }
+
+  ionViewWillEnter() {
+    const toolbarEl = document.querySelector('ion-toolbar');
+    toolbarEl?.setAttribute('color', 'transparent');
+  }
+
+ 
 
   async forgotPassword() {
     if (!this.username) {
@@ -40,5 +49,10 @@ export class ForgotPasswordPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+
+  goBack() {
+    // You can add any custom logic here
+    this.navCtrl.back();
   }
 }

@@ -8,7 +8,7 @@
         <h1>Hello,{{name}}</h1>
        </div>
         <div class="img-container">
-        <img class="image" src="/assets/azande.png" alt="profile-picture" />
+        <img class="image" src="/assets/icon.png" alt="profile-picture" />
       </div>
   </div>
   <div class="pl-5">
@@ -21,9 +21,12 @@
     <ion-col size="4">Total Trips</ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="4">R{{pass.balance}}</ion-col>
-    <ion-col  size="4">R6.50</ion-col>
-    <ion-col size="4">89</ion-col>
+    <!-- <ion-col size="4">R{{pass.balance}}</ion-col>
+    <ion-col  size="4">R{{pass.balance/5}}</ion-col>
+    <ion-col size="4">R{{pass.balance + pass.balance/5}}</ion-col> -->
+    <ion-col size="4">R{{pass?.balance | number:'1.2-2'}}</ion-col>
+    <ion-col size="4">R{{getBonus() | number:'1.2-2'}}</ion-col>
+    <ion-col size="4">R{{getTotal() | number:'1.2-2'}}</ion-col>
   </ion-row>
 </ion-card>
 
