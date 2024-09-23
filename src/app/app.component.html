@@ -11,7 +11,11 @@
           <ion-icon slot="start" name="person-outline" color="light"></ion-icon>
           <ion-label color="light">Profile</ion-label>
         </ion-item>
-        
+        <ion-item [routerLink]="['/tabs/settings']" button>
+          <ion-icon slot="start"  name="settings-outline" color="light"></ion-icon>
+          <!-- <ion-icon slot="start" name="person-outline" color="light"></ion-icon> -->
+          <ion-label color="light">Settings</ion-label>
+        </ion-item>
         <ion-item [routerLink]="['/personal-card']" button >
           <ion-icon slot="start" name="card-outline" color="light"></ion-icon>
           <ion-label color="light">Personal Card</ion-label>

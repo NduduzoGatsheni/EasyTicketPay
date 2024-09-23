@@ -20,31 +20,23 @@ export class TaxiPage implements OnInit {
   ngOnInit() {
 
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-    
       const  data= params['uid'];
-    //  ;
-      // alert(data);
       if(data){
-        // alert("ndim oyo");
         this.passengerId = data;
-        alert("ngila");
       }
       });
       this.loadTransactions();
-
-
-
   }
 
   loadTransactions() {
     const DateConstructor = Date;
-    alert(this.passengerId);
+   
     //note
     this.service.getTransactionsBy_PassengerId(this.passengerId).pipe(
       map(actions => actions.map((a:any) => {
         const data: any = a.payload.doc.data();
 
-        alert(JSON.stringify(data));
+      
 
         const id = a.payload.doc.id;
         console.log(a.payload.doc);

@@ -35,14 +35,6 @@ const routes: Routes = [
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
   {
-    path: 'otp',
-    loadChildren: () => import('./otp/otp.module').then( m => m.OTPPageModule)
-  },
-  {
-    path: 'create',
-    loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
-  },
-  {
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
   },
@@ -59,25 +51,10 @@ const routes: Routes = [
     loadChildren: () => import('./train/train.module').then( m => m.TrainPageModule)
   },
   {
-    path: 'confirm-payment',
-    loadChildren: () => import('./confirm-payment/confirm-payment.module').then( m => m.ConfirmPaymentPageModule)
-  },
-  {
-    path: 'sending-payment',
-    loadChildren: () => import('./sending-payment/sending-payment.module').then( m => m.SendingPaymentPageModule)
-  },
-  {
-    path: 'successfully',
-    loadChildren: () => import('./successfully/successfully.module').then( m => m.SuccessfullyPageModule)
-  },
-  {
-    path: 'view-card',
-    loadChildren: () => import('./view-card/view-card.module').then( m => m.ViewCardPageModule)
-  },
-  {
     path: 'sign-vehicle',
     loadChildren: () => import('./Taxi_Driver_Pages/sign-vehicle/sign-vehicle.module').then( m => m.SignVehiclePageModule)
-  },  {
+  },
+  {
     path: 'edit',
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   },

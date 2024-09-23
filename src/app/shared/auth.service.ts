@@ -70,7 +70,7 @@ async presentLoader() {
       message: 'Please wait...',
       translucent: true,
       spinner: 'circles', 
-      duration: 1000 
+      duration: 800 
     });
     await loading.present();
   }
@@ -102,10 +102,10 @@ async presentAlert(header: string, message: string) {
     try {
       if (emailRegex.test(email)) {
      
-
+        this.presentLoader();
       const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
       const user = credential.user;
-      alert(user);
+    
       if (user && !user.emailVerified) {
         this.presentToast('Please verify your email before logging in.', 'warning');
         await this.afAuth.signOut();
@@ -115,7 +115,8 @@ async presentAlert(header: string, message: string) {
         const uid = credential.user.uid;
         this.email = email;
         this.uid = uid;
-        alert(uid);
+        // alert(uid);
+        
         this.router.navigate(['/tabs/home'], { queryParams: { uid: uid} });
         return;
       }

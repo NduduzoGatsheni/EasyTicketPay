@@ -113,8 +113,8 @@ box-shadow:  9px 9px 17px #59a6ee,
         position:relative;
         }
   }
-  .bar-code ion-button:hover{
-    background-color:yellow;
-  }
-    
+
+.bar-code ion-button:active{
+    background-color:rgb(7, 202, 0);
+  }   
     

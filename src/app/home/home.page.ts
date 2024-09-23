@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
     });
   }
   getBonus(): number {
-    return this.pass.balance ? this.pass.balance / 5 : 0;
+    return this.pass.balance ? this.pass.balance / 20 : 0;
   }
 
   getTotal(): number {
