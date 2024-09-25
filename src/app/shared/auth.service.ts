@@ -13,7 +13,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from 'firebase/auth'
 
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app'; // Importing the compat version of Firebase
 
+interface LoginData {
+  loginCount: number;
+  logins: string[];
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -98,6 +104,7 @@ async presentAlert(header: string, message: string) {
   }
 
   async login(email: string, password: string): Promise<void> {
+    
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     try {
       if (emailRegex.test(email)) {
@@ -116,7 +123,7 @@ async presentAlert(header: string, message: string) {
         this.email = email;
         this.uid = uid;
         // alert(uid);
-        
+        this.logUserLogin(uid);
         this.router.navigate(['/tabs/home'], { queryParams: { uid: uid} });
         return;
       }
@@ -143,15 +150,16 @@ async presentAlert(header: string, message: string) {
             const uid = userCredential.user.uid;
             this.uid = uid;
             this.email = email;
-            await this.presentAlert(this.uid, 'Login in successfully.');
+            await this.presentToast('Login in successfully.','success');
+           this.logUserLogin(uid);
             this.router.navigate(['/driver-tabs/dashboard'], { queryParams: { uid: uid } });
           } else {
-            await this.presentAlert('Error', 'The User not found.');
+            await this.presentToast('User not found.','danger');
           }
         },
         error: async (error) => {
           console.error('Error signing in:', error.message);
-          await this.presentAlert('Error', 'An error occurred while signing in.');
+          await this.presentToast('An error occurred while signing in.','danger');
         }
       });
     }
@@ -159,14 +167,59 @@ async presentAlert(header: string, message: string) {
     catch (error) {
       console.error('Error logging in:', error);
       if (error instanceof FirebaseError && error.code === 'auth/user-not-found') {
-        this.presentAlert('Error', 'The email address is not associated with any account.');
+        this.presentToast('The email address is not associated with any account.','danger');
       } else if (error instanceof FirebaseError && error.code === 'auth/wrong-password') {
-        this.presentAlert('Error', 'The password is incorrect.');
+        this.presentToast('Password is incorrect.','danger');
       } else {
-        this.presentAlert('Error', 'An error occurred while logging in. Please try again later.');
+        this.presentToast('An error occurred while logging in. Please try again later.','danger');
       }
     }
   }
 
+
+
+
+
+
+
+
+
+
+  async logUserLogin(uid: string): Promise<void> {
+    try {
+      // Ensure uid is provided
+      if (!uid) {
+        console.error('User ID is missing');
+        return;
+      }
+
+      const userDocRef = this.firestore.collection('historyLogins').doc(uid); // Reference to user's document
+      const userDocSnap = await userDocRef.get().toPromise(); // Fetch the document
+
+      const loginTime = new Date().toISOString(); // Current timestamp
+
+      if (userDocSnap && userDocSnap.exists) {
+        // If the document exists, increment the loginCount and add the new time to the array
+        const currentData = userDocSnap.data() as LoginData; // Type assertion for currentData
+        const currentCount = currentData?.loginCount || 0; // Access loginCount safely
+
+        await userDocRef.update({
+          loginCount: currentCount + 1, // Increment login count
+          logins: firebase.firestore.FieldValue.arrayUnion(loginTime) // Use arrayUnion from Firebase
+        });
+        console.log(`Login count updated for user: ${uid}, Time: ${loginTime}`);
+      } else {
+        // If the document does not exist, create it with an initial login count and array of logins
+        await userDocRef.set({
+          loginCount: 1,
+          logins: [loginTime] // First login time in the array
+        });
+        console.log(`Login count initialized for user: ${uid}, Time: ${loginTime}`);
+      }
+    } catch (error) {
+      console.error('Error logging user login:', error);
+      // Additional error handling can be added here, e.g., displaying an alert to the user
+    }
+  }
 }
 
