@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ServiceService } from '../shared/service.service';
 import { map } from 'rxjs/operators';
+import { PopoverController } from '@ionic/angular';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({
   selector: 'app-taxi',
@@ -15,7 +17,7 @@ export class TaxiPage implements OnInit {
   passengerId: string = '';
   queryParamsSubscription: Subscription | undefined;
 
-  constructor(private service: ServiceService,private route: ActivatedRoute) {}
+  constructor(private service: ServiceService,private route: ActivatedRoute,public popoverController: PopoverController) {}
 
   ngOnInit() {
 
@@ -67,17 +69,50 @@ export class TaxiPage implements OnInit {
     };
     return new Date(date).toLocaleDateString('en-US', options);
   }
-
   groupTransactionsByDate() {
     this.groupedTransactions = this.transactions.reduce((acc, transaction) => {
       const [date, time] = transaction.dateTime.split(', ');
+      const vehicleId = transaction.vehicleId; // Assuming vehicleId is a property in the transaction object
+  
+      // Assigning the time and vehicleId back to the transaction object for easier access later
       transaction.datetime = time;
+      transaction.vehicleId = vehicleId;
+  
+      // Check if this date already exists in the accumulator
       if (!acc[date]) {
         acc[date] = [];
       }
+  
+      // Push the transaction with vehicleId to the corresponding date group
       acc[date].push(transaction);
-
+  
       return acc;
     }, {} as Record<string, any[]>);
+  }
+  
+  // groupTransactionsByDate() {
+  //   this.groupedTransactions = this.transactions.reduce((acc, transaction) => {
+  //     const [date, time] = transaction.dateTime.split(', ');
+  //     transaction.datetime = time;
+  //     if (!acc[date]) {
+  //       acc[date] = [];
+  //     }
+  //     acc[date].push(transaction);
+
+  //     return acc;
+  //   }, {} as Record<string, any[]>);
+  // }
+
+
+  async presentPopover(ev: any, uid: string) {
+    const popover = await this.popoverController.create({
+      component: StarRatingComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        uid: uid,
+      }
+    });
+    return await popover.present();
   }
 }

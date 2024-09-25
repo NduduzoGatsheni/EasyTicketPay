@@ -17,6 +17,7 @@
     
 <h1>Taxis</h1>
 
+
   </div>
   </div>
   </div>
@@ -29,6 +30,11 @@
           <tr *ngFor="let transaction of dateGroup.value">
             <td>{{ transaction.From_To }}</td>
             <td>{{ transaction.datetime }}</td>
+            <td>
+              <ion-button (click)="presentPopover($event,transaction.vehicleId)">
+              {{transaction.vehicleId}}
+              </ion-button>
+            </td>
           </tr>
         </tbody>
       </table>
