@@ -57,7 +57,9 @@ export class ServiceService {
   getUserByUid(uid: string): Observable<passenger[]> {
     return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid)).valueChanges();
   }
-
+  getVehicleById(vehicleId: string): Observable<Vehicle | undefined> {
+    return this.firestore.doc<Vehicle>(`vehicles/${vehicleId}`).valueChanges();
+  }
   getByUid(uid: string): Observable<passenger[]> {
     return this.firestore.collection<passenger>('passengers', ref => ref.where('passengerId', '==', uid))
       .snapshotChanges()
@@ -80,6 +82,9 @@ export class ServiceService {
   getTransport(uid: string): Observable<Vehicle[]> {
     return this.firestore.collection<Vehicle>('vehicles', ref => ref.where('vehicleId', '==', uid)).valueChanges();
   }
+  // getVehicleById(vehicleId: string): Observable<Vehicle | undefined> {
+  //   return this.firestore.doc<Vehicle>(`vehicles/${vehicleId}`).valueChanges();
+  // }
   async signUp(passenger:passenger, uid:string ): Promise<void> {
     try {
         passenger.passengerId = uid;
