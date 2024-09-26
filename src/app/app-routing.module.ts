@@ -61,7 +61,13 @@ const routes: Routes = [
   {
     path: 'personal-card',
     loadChildren: () => import('./personal-card/personal-card.module').then( m => m.PersonalCardPageModule)
+  },
+  {
+    path: 'driver-transactions',
+    loadChildren: () => import('./Taxi_Driver_Pages/driver-transactions/driver-transactions.module').then( m => m.DriverTransactionsPageModule)
   }
+
+
 
 ];
 @NgModule({

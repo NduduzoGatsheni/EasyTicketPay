@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Transactions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Transactions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="total-amount">
+    <h2>Total Earnings</h2>
+    <div class="amount">${{ totalAmount.toFixed(2) }}</div>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let transaction of transactions$ | async">
+      <ion-label>
+        <h2>{{ transaction.From_To }}</h2>
+        <p>{{ transaction.dateTime | date:'medium' }}</p>
+        <p>ID: {{ transaction.TransactionID }}</p>
+      </ion-label>
+      <ion-note slot="end" color="primary">${{ transaction.Amount.toFixed(2) }}</ion-note>
+      <ion-button slot="end" fill="solid" (click)="claimAmount(transaction)" [disabled]="transaction.claimed">
+        {{ transaction.claimed ? 'Claimed' : 'Claim' }}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content loadingText="Loading more transactions..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

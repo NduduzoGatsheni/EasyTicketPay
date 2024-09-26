@@ -3,11 +3,38 @@
     <ion-title>Analytics</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Analytics</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-content [fullscreen]="true" class="colors">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="3" *ngFor="let card of cards">
+          <ion-card class="dashboard-card"  button>
+            <!-- <ion-card-title> -->
+              <h2>{{ card.title }}</h2>
+            <!-- </ion-card-title> -->
+            <ion-card-content>
+              <!-- <h2>{{ card.title }}</h2> -->
+              
+              <div class="card-content">
+           
+                <div class="circle-progress">
+                  <svg viewBox="0 0 36 36" class="circular-chart">
+                    <path class="circle-bg" d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" [attr.stroke-dasharray]="card.count / 1+ ', 100'" d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="20.35" class="percentage">{{ card.count }}</text>
+                  </svg>
+                </div>
+              </div>
+              <div class="card-icon">
+                <ion-icon [name]="card.icon" size="large"></ion-icon>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
 </ion-content>

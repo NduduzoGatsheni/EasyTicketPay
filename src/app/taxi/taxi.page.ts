@@ -72,12 +72,12 @@ export class TaxiPage implements OnInit {
   groupTransactionsByDate() {
     this.groupedTransactions = this.transactions.reduce((acc, transaction) => {
       const [date, time] = transaction.dateTime.split(', ');
-      const vehicleId = transaction.vehicleId; // Assuming vehicleId is a property in the transaction object
+      const vehicleId = transaction.VehicleId; // Assuming vehicleId is a property in the transaction object
   
       // Assigning the time and vehicleId back to the transaction object for easier access later
       transaction.datetime = time;
-      transaction.vehicleId = vehicleId;
-  
+      transaction.VehicleId = vehicleId;
+  alert(transaction.VehicleId);
       // Check if this date already exists in the accumulator
       if (!acc[date]) {
         acc[date] = [];

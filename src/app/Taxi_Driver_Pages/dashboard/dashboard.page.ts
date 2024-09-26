@@ -14,7 +14,7 @@ import { NavController } from '@ionic/angular';
 })
 export class DashboardPage implements OnInit {
 
-  uid:string="1ZXjgirev8beBEZh2GZSsLVDRgQ2";
+  uid:string="";
   name = "";
   user!:any;
   vehicle:Vehicle;
@@ -32,12 +32,20 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-      const  data= params['uid'];
-      if(data){
-        this.uid = data;
-      }
-      });
+
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.uid = user.uid;
+        console.log('Current User UID:', this.uid);
+        // this.loadUserData();
+    
+    // this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
+    //   const  data= params['uid'];
+    //   if(data){
+    //     this.uid = data;
+    //   }
+    //   });
       this.serv.getTransport(this.uid).subscribe(users => {
         if (users.length > 0) {
           const user = users[0].ownerName;
@@ -52,12 +60,19 @@ export class DashboardPage implements OnInit {
               this.name = `${name.toUpperCase()}.`;
           }
       
-          alert("Name: " + this.name);
+          console.log("Name: " + this.name);
       } else {
           console.log('User not found');
-          alert('User not found!!');
+          // alert('User not found!!');
       }      
       });
+
+    } else {
+      console.log('User not logged in.');
+      // Handle case where user is not logged in, e.g., redirect to login page
+      // this.router.navigate(['/login']);
+    }
+  });
   }
 
   goToHistory() {

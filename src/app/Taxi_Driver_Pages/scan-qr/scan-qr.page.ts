@@ -8,7 +8,11 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-
+interface Route {
+  from: string;
+  to: string;
+  amount: number;
+}
 // import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 @Component({
   selector: 'app-scan-qr',
@@ -33,27 +37,27 @@ payingPassenger: {name: string, money_in: number };
 
 place:string="";
 price:number=0;
-
-locations =[{location:"Durban - South Beach",amount:10},
-            {location:"Durban - Umlazi",amount:20},
-            {location:"Durban - Kwashu",amount:25},
-            {location:"Durban - Mont_Clair",amount:18},
-            {location:"Durban - Mayville",amount:18},
-            {location:"Durban - Musgrave",amount:10},
-            {location:"Durban - Pagate",amount:30},
-            {location:"Durban - Velurem",amount:34},
-            {location:"Durban - Lovu",amount:28},
-            {location:"Durban - Umkhomazi",amount:40},
-            {location:"Durban - clair_mont",amount:40},
-            {location:"Durban - clair_estate",amount:25},
-            {location:"Durban - New German",amount:18},
-            {location:"Durban - Pine Town",amount:24},
-            {location:"Durban - Stanger",amount:60},
-            {location:"Durban - Ballito",amount:40},
-            {location:"Durban - Nanda",amount:34},
-            {location:"Durban - Mdloti",amount:28},
-            {location:"Durban - Efolweni",amount:55}
-            ]
+locations: { location: string; amount: number }[] = [];
+// locations =[{location:"Durban - South Beach",amount:10},
+//             {location:"Durban - Umlazi",amount:20},
+//             {location:"Durban - Kwashu",amount:25},
+//             {location:"Durban - Mont_Clair",amount:18},
+//             {location:"Durban - Mayville",amount:18},
+//             {location:"Durban - Musgrave",amount:10},
+//             {location:"Durban - Pagate",amount:30},
+//             {location:"Durban - Velurem",amount:34},
+//             {location:"Durban - Lovu",amount:28},
+//             {location:"Durban - Umkhomazi",amount:40},
+//             {location:"Durban - clair_mont",amount:40},
+//             {location:"Durban - clair_estate",amount:25},
+//             {location:"Durban - New German",amount:18},
+//             {location:"Durban - Pine Town",amount:24},
+//             {location:"Durban - Stanger",amount:60},
+//             {location:"Durban - Ballito",amount:40},
+//             {location:"Durban - Nanda",amount:34},
+//             {location:"Durban - Mdloti",amount:28},
+//             {location:"Durban - Efolweni",amount:55}
+//             ]
 
 transaction: Transaction = {
   TransactionID: '',
@@ -99,6 +103,8 @@ currentTime!: string;
     setInterval(() => {
       this.updateTime();
     }, 1000);
+
+    this.fetchRoutes();
   }
   updateTime() {
     const now = new Date();
@@ -254,5 +260,30 @@ else{
   stopScan() {
     BarcodeScanner.stopScan();
     BarcodeScanner.showBackground(); 
+  }
+
+
+  // locations: { location: string; amount: number }[] = [];
+
+  async fetchRoutes() {
+    try {
+      const routesSnapshot = await this.firestore.collection('routes').get().toPromise();
+      if (routesSnapshot && !routesSnapshot.empty) {
+        routesSnapshot.forEach(doc => {
+          const data = doc.data() as Route;
+          const location = `${data.from} - ${data.to}`;
+          const amount = data.amount;
+
+          this.locations.push({ location, amount });
+        });
+        console.log('Locations:', this.locations);
+      } else {
+        console.log('No routes found.');
+      }
+    // }
+      console.log('Locations:', this.locations);
+    } catch (error) {
+      console.error('Error fetching routes:', error);
+    }
   }
 }

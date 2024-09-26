@@ -1,0 +1,123 @@
+:host {
+    --primary-color: #38c0ff;
+    --secondary-color: antiquewhite;
+    --text-color: #333;
+    --card-bg-color: #fff;
+    --ion-background-color: #f4f5f8;
+  }
+
+  :root {
+    --primary-color: #3498db; // or any other valid color
+  }
+  
+  
+  ion-content {
+    --background: var(--ion-background-color);
+  }
+  
+  ion-toolbar {
+    --background: var(--primary-color);
+    --color: var(--card-bg-color);
+  }
+  
+  ion-title {
+    font-weight: bold;
+  }
+  
+  ion-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    
+    ion-card-header {
+      background-color: var(--primary-color);
+      color: var(--card-bg-color);
+    }
+    
+    ion-card-content {
+      padding: 20px;
+      
+      h2 {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin: 0;
+      }
+    }
+  }
+  
+  ion-list {
+    background: transparent;
+    padding: 10px;
+  }
+  
+  ion-item {
+    --background: var(--card-bg-color);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+    ion-label {
+      h2 {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+      p {
+        color: var(--text-color);
+        opacity: 0.7;
+      }
+    }
+  
+    ion-note {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  
+    ion-button {
+      --background: var(--secondary-color);
+      --color: var(--primary-color);
+      font-weight: bold;
+      
+      &[disabled] {
+        --background: #e0e0e0;
+        --color: #a0a0a0;
+      }
+    }
+  }
+  
+  .total-amount {
+    // background: linear-gradient(135deg, var(--primary-color), darken(var(--primary-color), 15%));
+    background: linear-gradient(135deg,#3498db, darken(#38c0ff, 15%));
+
+    color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+  
+    .amount {
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :host {
+      --ion-background-color: #1e1e1e;
+      --card-bg-color: #2a2a2a;
+      --text-color: #ffffff;
+    }
+  
+    ion-item {
+      --background: var(--card-bg-color);
+    }
+  }
